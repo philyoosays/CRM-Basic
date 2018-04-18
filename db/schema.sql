@@ -1,5 +1,15 @@
+DROP DATABASE crm_unit02;
+CREATE DATABASE crm_unit02;
 
-CREATE DATABASE crm;
+\c crm_unit02
+
+DROP TABLE IF EXISTS people CASCADE;
+DROP TABLE IF EXISTS address CASCADE;
+DROP TABLE IF EXISTS contact CASCADE;
+DROP TABLE IF EXISTS notes CASCADE;
+DROP TABLE IF EXISTS gifts CASCADE;
+DROP TABLE IF EXISTS campaigns CASCADE;
+DROP TABLE IF EXISTS fundraisers CASCADE;
 
 CREATE TABLE people (
 id SERIAL PRIMARY KEY,
@@ -20,60 +30,6 @@ donotshare BOOLEAN,
 active BOOLEAN DEFAULT true
 );
 
-CREATE TABLE peopleaddress (
-contactid INTEGER REFERENCES contact(id),
-addressid INTEGER REFERENCES address(id)
-)
-
-CREATE TABLE address (
-id SERIAL PRIMARY KEY,
-address VARCHAR(255),
-city TEXT,
-state TEXT,
-zipcode INTEGER,
-plus4 INTEGER,
-primary BOOLEAN,
-activestart DATE,
-activeend DATE,
-donotmail BOOLEAN
-);
-
-CREATE TABLE contact (
-id SERIAL PRIMARY KEY,
-contactid INTEGER REFERENCES contact(id),
-type TEXT,
-contact VARCHAR(255),
-perferred BOOLEAN,
-donotcontact BOOLEAN
-);
-
-CREATE TABLE notes (
-id SERIAL PRIMARY KEY,
-contactid INTEGER REFERENCES contacts(id),
-note TEXT,
-notedate DATE,
-fundraiserid INTEGER REFERENCES fundraisers(id),
-giftid INTEGER REFERENCES gifts(id),
-category TEXT,
-followup BOOLEAN
-);
-
-CREATE TABLE gifts (
-id SERIAL PRIMARY KEY,
-contactid INTEGER REFERENCES contacts(id),
-amount FLOAT(2),
-closedate DATE,
-fundraiserid INTEGER REFERENCES fundraisers(id),
-campaignid INTEGER REFERENCES campaign(id),
-donotthank BOOLEAN,
-isrecurring BOOLEAN,
-appenddate DATE,
-datasource TEXT,
-acknowledged DATE,
-sourceid TEXT,
-paymenttype TEXT
-);
-
 CREATE TABLE campaigns (
 id SERIAL PRIMARY KEY,
 campaignname TEXT,
@@ -91,3 +47,62 @@ fname TEXT,
 lname TEXT,
 goal FLOAT(2)
 );
+
+-- CREATE TABLE peopleaddress (
+-- contactid INTEGER REFERENCES contact(id),
+-- addressid INTEGER REFERENCES address(id)
+-- );
+
+CREATE TABLE address (
+id SERIAL PRIMARY KEY,
+personid INTEGER REFERENCES people(id),
+address VARCHAR(255),
+city TEXT,
+state TEXT,
+zipcode INTEGER,
+plus4 INTEGER,
+main BOOLEAN,
+activestart DATE,
+activeend DATE,
+donotmail BOOLEAN
+);
+
+CREATE TABLE contact (
+id SERIAL PRIMARY KEY,
+contactid INTEGER REFERENCES people(id),
+type TEXT,
+contact VARCHAR(255),
+perferred BOOLEAN,
+donotcontact BOOLEAN
+);
+
+CREATE TABLE gifts (
+id SERIAL PRIMARY KEY,
+contactid INTEGER REFERENCES people(id),
+amount FLOAT(2),
+closedate DATE,
+fundraiserid INTEGER REFERENCES fundraisers(id),
+campaignid INTEGER REFERENCES campaigns(id),
+donotthank BOOLEAN,
+isrecurring BOOLEAN,
+appenddate DATE,
+datasource TEXT,
+acknowledged DATE,
+sourceid TEXT,
+paymenttype TEXT
+);
+
+CREATE TABLE notes (
+id SERIAL PRIMARY KEY,
+contactid INTEGER REFERENCES people(id),
+note TEXT,
+notedate DATE,
+fundraiserid INTEGER REFERENCES fundraisers(id),
+giftid INTEGER REFERENCES gifts(id),
+category TEXT,
+followup BOOLEAN
+);
+
+
+
+

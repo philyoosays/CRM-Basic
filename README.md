@@ -126,7 +126,7 @@ Campaign view will show campaign data. POST MVP will also show performance data.
 | --- | :---: |  :---: | :---: |
 | Build Schema | H | .5hr |  |
 | Login | H | .5hr |  |
-| Basic server and folder structure | H | .5hr |  |
+| Basic server and folder structure | H | 1hr |  |
 | People Search | H | 1hr |  |
 | Views: person 1hr, new note 1.5hr, new gift 1.5hr, campaign 1hr, new campaign 1hr, new person 1hr| H | 7hr |  |
 | Models | H | 2hr |  |
