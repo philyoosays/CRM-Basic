@@ -137,59 +137,23 @@ Campaign view will show campaign data. POST MVP will also show performance data.
 | Total |  | 27hrs |  |
 
 ## Helper Functions
-Helper functions should be generic enought that they can be reused in other applications. Use this section to document all helper functions that fall into this category.
 
-| Function | Description | 
-
-| revealScore | Reads the global variable 'score', converts it to a string padded with zeros to 4 digits, grabs the correct DOM element and updates the score on the DOM element and returns the padded score string. | 
-
-| theBiggestY | For any given orientation of a falling object, this helper function finds the lowest point of the object to aid in collision detection | 
 
 ## Additional Libraries
-jQuery is the only library used in this game. 
+
 
 ## Code Snippet
 
-  let pivot = activeObj[activeObj.length - 1];
-  let distance = [];
-  for (let i = 0; i < activeObj.length - 1; i++) {
-    distance.push({x: pivot.x - activeObj[i].x, y: pivot.y - activeObj[i].y});
-  }
-  for (let i = 0; i < distance.length; i++) {
-    activeObj[i].x += distance[i].x;
-    activeObj[i].y -= distance[i].x;
-    activeObj[i].x += distance[i].y;
-    activeObj[i].y += distance[i].y;
-  }
-
-This code is what is responsible for rotating the objects in a clockwise motion. It computes the distance to an arbitrarily selected pivot square on each given objects and then selects the correct place in the grid to go despite its relative position to the pivot. I'm proud of this coude because I didn't have to program any exceptions (ex: a square is both above and left of the center.).
 
 ## jQuery Discoveries
- $('') - This game really REALLY makes sure of the selectors to compute game logic and to detect collisions.
- 
- .html() - I used .html to create my landing, nameScreen, optionsScreen, and gameOver pages. This method was also used to update the score during gameplay.
- 
- .addClass() and .removeClass() - This was used to keep track of gameplay data and object positions
+
 
 ## Change Log
--creating gameboard
--object definitions
--keypress function
- -label edges and landscape for border detection
- -randomly select objects from the definitions library
- -create object gravity
- -create movement function
- -place the object on the screen
- -write a function to detect copleted lines
- -write a function to clear completed lines
- -stop active objects from entering landscape from the side
- -rewrote grabbing from the object definitions to copying from object definitions to solve a bug
- -create a death height for a gameover condition
- -create scoring
- -create a gameOver screen
- -create a landing page
- -create a name page
- -create an options page
+ - created schema
+ - built out the folder structure
+ - server.js written and running
+ - built the models
+ - 
 
 ## Issues and Resolutions
  The one major issue I had was that although I hardcoded all the starting coordinates of the objects, new objects seemed to appear inside the landscape or well outside the game board. I wasn't getting any errors. The answer was in the way my activeObj variable was grabbing objects out of the definition library. I had set the value of activeObj to the object itself so when the game logic is running on the object that activeObj is referring to and updating its coordinate values, the definitions library was also getting the original starting coordinates updated. Like we learned in class, set activeObj equal to a random object doesn't give activeObj a copy of the object but a reference to the selected object in memory.

@@ -21,12 +21,12 @@ lname TEXT NOT NULL,
 suffix TEXT,
 mailuntil DATE,
 occupation VARCHAR(255),
-onlyannualreceipt BOOLEAN,
-mailothermonth BOOLEAN,
-mailquarterly BOOLEAN,
-mailtwiceannual BOOLEAN,
-mailonceannual BOOLEAN,
-donotshare BOOLEAN,
+onlyannualreceipt BOOLEAN DEFAULT false,
+mailothermonth BOOLEAN DEFAULT false,
+mailquarterly BOOLEAN DEFAULT false,
+mailtwiceannual BOOLEAN DEFAULT false,
+mailonceannual BOOLEAN DEFAULT false,
+donotshare BOOLEAN DEFAULT false,
 active BOOLEAN DEFAULT true
 );
 
@@ -69,7 +69,7 @@ donotmail BOOLEAN
 
 CREATE TABLE contact (
 id SERIAL PRIMARY KEY,
-contactid INTEGER REFERENCES people(id),
+personid INTEGER REFERENCES people(id),
 type TEXT,
 contact VARCHAR(255),
 perferred BOOLEAN,
@@ -78,14 +78,14 @@ donotcontact BOOLEAN
 
 CREATE TABLE gifts (
 id SERIAL PRIMARY KEY,
-contactid INTEGER REFERENCES people(id),
+personid INTEGER REFERENCES people(id),
 amount FLOAT(2),
 closedate DATE,
 fundraiserid INTEGER REFERENCES fundraisers(id),
 campaignid INTEGER REFERENCES campaigns(id),
 donotthank BOOLEAN,
 isrecurring BOOLEAN,
-appenddate DATE,
+appenddate DATE NOT NULL DEFAULT NOW(),
 datasource TEXT,
 acknowledged DATE,
 sourceid TEXT,
@@ -94,7 +94,7 @@ paymenttype TEXT
 
 CREATE TABLE notes (
 id SERIAL PRIMARY KEY,
-contactid INTEGER REFERENCES people(id),
+personid INTEGER REFERENCES people(id),
 note TEXT,
 notedate DATE,
 fundraiserid INTEGER REFERENCES fundraisers(id),
@@ -102,6 +102,33 @@ giftid INTEGER REFERENCES gifts(id),
 category TEXT,
 followup BOOLEAN
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
