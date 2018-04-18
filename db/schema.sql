@@ -96,7 +96,7 @@ CREATE TABLE notes (
 id SERIAL PRIMARY KEY,
 personid INTEGER REFERENCES people(id),
 note TEXT,
-notedate DATE,
+notedate DATE NOT NULL DEFAULT NOW(),
 fundraiserid INTEGER REFERENCES fundraisers(id),
 giftid INTEGER REFERENCES gifts(id),
 category TEXT,

@@ -156,6 +156,4 @@ Campaign view will show campaign data. POST MVP will also show performance data.
  - 
 
 ## Issues and Resolutions
- The one major issue I had was that although I hardcoded all the starting coordinates of the objects, new objects seemed to appear inside the landscape or well outside the game board. I wasn't getting any errors. The answer was in the way my activeObj variable was grabbing objects out of the definition library. I had set the value of activeObj to the object itself so when the game logic is running on the object that activeObj is referring to and updating its coordinate values, the definitions library was also getting the original starting coordinates updated. Like we learned in class, set activeObj equal to a random object doesn't give activeObj a copy of the object but a reference to the selected object in memory.
 
- After hours of anguish, defeat and a thousand console logs later, I solved this with a forEach loop to copy the values from the definitions library to the activeObj object.

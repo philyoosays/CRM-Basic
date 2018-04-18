@@ -219,7 +219,7 @@ module.exports = {
       `, id);
   },
 
-  findThem(data) {
+  findPeople(data) {
     return db.many(`
       SELECT
         p.id,
