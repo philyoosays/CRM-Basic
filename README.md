@@ -153,7 +153,7 @@ Campaign view will show campaign data. POST MVP will also show performance data.
  - built out the folder structure
  - server.js written and running
  - built the models
- - 
+ - started the view, controller, and routes for main search
 
 ## Issues and Resolutions
 

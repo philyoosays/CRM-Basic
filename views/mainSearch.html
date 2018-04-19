@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Contacts</title>
-  <link rel="stylesheet" text="text/css" href="../css/style.css">
+  <link rel="stylesheet" text="text/css" href="../public/css/style.css">
 </head>
 <body>
   <div class="container">
@@ -18,12 +18,11 @@
       <div class="searchform">
         <div class="searchtitle">
           <h1>Search Form</h1>
-          <h1><%= input %></h1>
         </div>
-        <form action="/search" method="get">
+        <form action="/search/results" method="get">
           <div class="namesearch">
-            <input type="text" name="prefix" placeholder="prefix" value="<% if(input !== undefined) { %>
-              <%= input.prefix %>
+            <input type="text" name="prefix" placeholder="prefix" value="<% if(input !== undefined> {
+              <%= input.fname %>
             <% } %>">
             <input type="text" name="fname" placeholder="first name">
             <input type="text" name="mname" placeholder="middle name">

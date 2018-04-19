@@ -238,9 +238,13 @@ module.exports = {
       ON p.id = a.personid
       WHERE
         p.active = true, a.main = true,
+        p.prefix LIKE '%data.prefix%'
         p.fname LIKE '%data.fname%',
+        p.mname LIKE '%data.mname%'
         p.lname LIKE '%data.lname%',
+        p.suffix LIKE '%data.suffix%'
         a.address LIKE '%data.address%',
+        a.city LIKE '%data.city%'
         a.state LIKE '%data.state%',
         a.zipcode LIKE '%data.zipcode%'
       `, {data});

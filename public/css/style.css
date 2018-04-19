@@ -1,0 +1,58 @@
+.container {
+  width: 98%;
+  height: 2000px;
+  margin: 5px;
+  border: 5px solid black;
+}
+
+.sidenav {
+  position: fixed;
+  width: 250px;
+  height: 96vh;
+  margin: 0;
+  border: 2px solid blue;
+}
+
+.sidespacer {
+  display: inline-flex;
+  justify-content: flex-start;
+  border: 5px solid red;
+  width: 250px;
+  height: 100%;
+}
+
+.main {
+  display: inline-flex;
+  /*justify-content: flex-end;*/
+  align-content: stretch;
+  /*align-content: flex-start;*/
+  border: 5px solid lime;
+  flex: 1;
+  position: absolute;
+  top: 20px;
+}
+
+.searchtitle > h1 {
+  text-align: center;
+}
+
+.button {
+  border: 2px solid yellow;
+}
+
+.button > input {
+  width: 150px;
+  padding: 50px;
+  align-self: center;
+}
+
+.namesearch, .addysearch {
+  display: inline-block;
+  border: 10px solid magenta;
+}
+
+.namesearch > input, .addysearch > input {
+  display: block;
+  margin: 5px;
+  width: 200px;
+}
