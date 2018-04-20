@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/search', searchRoutes);
+app.use('/people', peopleRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server up and listening on port ${PORT}, in ${app.get('env')} mode.`);

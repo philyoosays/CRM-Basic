@@ -21,15 +21,19 @@
   height: 100%;
 }
 
+.searchform {
+  display: block;
+  border: 3px solid salmon;
+}
+
 .main {
-  display: inline-flex;
-  /*justify-content: flex-end;*/
-  align-content: stretch;
+  display: flex;
+  justify-content: center;
+/*  align-content: stretch;*/
   /*align-content: flex-start;*/
   border: 5px solid lime;
-  flex: 1;
-  position: absolute;
-  top: 20px;
+  /*position: absolute;*/
+/*  top: 20px;*/
 }
 
 .searchtitle > h1 {

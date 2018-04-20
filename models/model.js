@@ -26,7 +26,7 @@ module.exports = {
         $/donotshare/
       )
       RETURNING *
-      `);
+      `, data);
   },
 
   createAddress(data) {
@@ -48,7 +48,7 @@ module.exports = {
         $/donotmail/
       )
       RETURNING *
-      `);
+      `, data);
   },
 
   createContact(data) {
@@ -65,7 +65,7 @@ module.exports = {
           $/donotcontact/
         )
         RETURNING *
-      `);
+      `, data);
   },
 
   updatePerson(data) {
@@ -90,7 +90,7 @@ module.exports = {
       WHERE
         id = $/id/
       RETURNING *
-      `, {data});
+      `, data);
   },
 
   updateAddress(data) {
@@ -109,7 +109,7 @@ module.exports = {
       WHERE
         id = $/addressid/
       RETURNING *
-      `, {data});
+      `, data);
   },
 
   updateContact(data) {
@@ -124,7 +124,7 @@ module.exports = {
       WHERE
         id = $/contactid/
       RETURNING *
-      `, {data});
+      `, data);
   },
 
   destroyContact(id) {
@@ -155,7 +155,7 @@ module.exports = {
         $/sourceid/,
         $/paymenttype/
       ) RETURNING *
-      `, {data})
+      `, data)
   },
 
   updateGift(data) {
@@ -177,7 +177,7 @@ module.exports = {
       WHERE
         id = $/giftid/
       RETURNING id
-      `, {data})
+      `, data)
   },
 
   createNote(data) {
@@ -194,7 +194,7 @@ module.exports = {
         $/category/,
         $/followup/
       ) RETURNING *
-      `, {data});
+      `, data);
   },
 
   updateNote(data) {
@@ -209,7 +209,7 @@ module.exports = {
       WHERE
         id = $/noteid/
       RETURNING *
-      `, {data});
+      `, data);
   },
 
   destroyNote(id) {
@@ -220,7 +220,8 @@ module.exports = {
   },
 
   findPeople(data) {
-    return db.many(`
+    console.log('this is the findPeople model')
+    return db.any(`
       SELECT
         p.id,
         p.prefix,
@@ -237,17 +238,50 @@ module.exports = {
       FROM people AS p JOIN address AS a
       ON p.id = a.personid
       WHERE
-        p.active = true, a.main = true,
-        p.prefix LIKE '%data.prefix%'
-        p.fname LIKE '%data.fname%',
-        p.mname LIKE '%data.mname%'
-        p.lname LIKE '%data.lname%',
-        p.suffix LIKE '%data.suffix%'
-        a.address LIKE '%data.address%',
-        a.city LIKE '%data.city%'
-        a.state LIKE '%data.state%',
-        a.zipcode LIKE '%data.zipcode%'
-      `, {data});
+        p.active = true
+        AND a.main = true
+        AND (p.prefix ILIKE $/prefix/)
+        AND (p.fname ILIKE $/fname/)
+        AND (p.mname ILIKE $/mname/)
+        AND (p.lname ILIKE $/lname/)
+        AND (p.suffix ILIKE $/suffix/)
+        AND (a.address ILIKE $/address/)
+        AND (a.city ILIKE $/city/)
+        AND (a.state ILIKE $/state/)
+        AND (a.zipcode = $/zipcode/)
+      `, data);
+  },
+
+  findPeopleNoZip(data) {
+    console.log('this is the findPeopleNoZip model')
+    return db.any(`
+      SELECT
+        p.id,
+        p.prefix,
+        p.fname,
+        p.nickname,
+        p.mname,
+        p.lname,
+        p.suffix,
+        a.address,
+        a.city,
+        a.state,
+        a.zipcode,
+        a.plus4
+      FROM people AS p JOIN address AS a
+      ON p.id = a.personid
+      WHERE
+        p.active = true
+        AND a.main = true
+        AND (p.prefix ILIKE $/prefix/)
+        AND (p.fname ILIKE $/fname/)
+        AND (p.mname ILIKE $/mname/)
+        AND (p.lname ILIKE $/lname/)
+        AND (p.suffix ILIKE $/suffix/)
+        AND (a.address ILIKE $/address/)
+        AND (a.city ILIKE $/city/)
+        AND (a.state ILIKE $/state/)
+      `, data);
   },
 
   findOnePerson(id) {
@@ -281,7 +315,8 @@ module.exports = {
       SELECT * FROM contact
       WHERE personid = $1
       `, id);
-  }
+  },
+
 };
 
 
