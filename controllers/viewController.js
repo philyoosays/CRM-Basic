@@ -8,12 +8,19 @@ module.exports = {
     res.sendStatus(406);
   },
   search(req, res, next) {
-    res.render('mainSearch.ejs', {input: res.locals.input, result: res.locals.result})
+    res.render('mainSearch.ejs')
   },
-  handleCreate(req, res) {
-    res.redirect('/quotes');
+  searchResults(req, res, next) {
+    res.render('searchResults.ejs', {input: res.locals.input, result: res.locals.result})
+    // res.json(res.locals.result)
   },
-  handleEdit(req, res) {
-    res.render('students/edit.ejs', {student: res.locals.student, houses: res.locals.houses});
+  personProfile(req, res, next) {
+    res.render('oneperson.ejs', {contact: res.locals.contact, money: res.locals.money})
   }
+  // handleCreate(req, res) {
+  //   res.redirect('search/results');
+  // },
+  // handleEdit(req, res) {
+  //   res.render('students/edit.ejs', {student: res.locals.student, houses: res.locals.houses});
+  // }
 }

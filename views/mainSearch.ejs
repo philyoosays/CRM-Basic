@@ -1,50 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Contacts</title>
-  <link rel="stylesheet" text="text/css" href="../css/style.css">
-</head>
-<body>
-  <div class="container">
-    <div class="sidenav">
+<% include ./partials/boilerplate %>
 
+<div class="main">
+  <div class="searchform">
+    <div class="searchtitle">
+      <h1>Search Form</h1>
     </div>
-    <div class="sidespacer">
-
-    </div>
-    <div class="main">
-      <div class="searchform">
-        <div class="searchtitle">
-          <h1>Search Form</h1>
-          <h1><%= input %></h1>
-        </div>
-        <form action="/search" method="get">
-          <div class="namesearch">
-            <input type="text" name="prefix" placeholder="prefix" value="<% if(input !== undefined) { %>
-              <%= input.prefix %>
-            <% } %>">
-            <input type="text" name="fname" placeholder="first name">
-            <input type="text" name="mname" placeholder="middle name">
-            <input type="text" name="lname" placeholder="last name">
-            <input type="text" name="suffix" placeholder="suffix">
-          </div>
-          <div class="addysearch">
-            <input type="text" name="address" placeholder="address">
-            <input type="text" name="city" placeholder="city">
-            <input type="text" name="state" placeholder="state">
-            <input type="text" name="zipcode" placeholder="zipcode">
-          </div>
-          <div class="button">
-            <input type="submit" value="Search">
-          </div>
-        </form>
+    <form action="/search/results" method="get">
+      <div class="namesearch">
+        <input type="text" name="prefix" placeholder="prefix">
+        <input type="text" name="fname" placeholder="first name">
+        <input type="text" name="mname" placeholder="middle name">
+        <input type="text" name="lname" placeholder="last name">
+        <input type="text" name="suffix" placeholder="suffix">
       </div>
-      <div class="results">
-
+      <div class="addysearch">
+        <input type="text" name="address" placeholder="address">
+        <input type="text" name="city" placeholder="city">
+        <input type="text" name="state" placeholder="state">
+        <input type="text" name="zipcode" placeholder="zipcode">
       </div>
-    </div>
+      <div class="button">
+        <input type="submit" value="Search">
+      </div>
+    </form>
   </div>
-</body>
-</html>
+</div>
+
+<% include ./partials/foot %>
