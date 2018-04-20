@@ -1,0 +1,36 @@
+<% include ./partials/boilerplate %>
+
+<div class="main">
+  <h1>Person View</h1>
+  <div class="contact">
+    <p><%= contact.prefix %> <%= contact.fname %> <%= contact.mname %> <%= contact.lname %> <%= contact.suffix %></p>
+    <p><%= contact.address %></p>
+    <p><%= contact.city $>, <%= contact.state %> <%= contact.zipcode %></p>
+  </div>
+  <div class="stats">
+    <h1>This is reserved for statistical data</h1>
+  </div>
+  <div class="personbuttons">
+    <ul>
+      <li>Search Contacts</li>
+      <li>Show All Gifts</li>
+      <li>More Contact Info</li>
+    </ul>
+  </div>
+  <div class="results">
+    <% if(data.amount === undefined) {
+      <% data.forEach( (d) => { %>
+        <p>Amount: <%= d.amount %> | Date: <%= d.closedate %> | Campaign: <%= d.campaign
+      <% }) %>
+    <% } %>
+
+  </div>
+</div>
+<script>
+  const button1 = document.querySelector('li:nth-of-type(1)');
+  const button2 = document.querySelector('li:nth-of-type(2)');
+  const button3 = document.querySelector('li:nth-of-type(3)');
+  button1.addEventListener('click', () => {
+    location
+  })
+</script>
