@@ -60,4 +60,6 @@ typings/
 # Git ignoring my data
 db/address.csv
 db/people.csv
+db/.DS_Store
+.DS_Store
 

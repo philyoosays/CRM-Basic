@@ -9,6 +9,7 @@ module.exports = {
   },
   search(req, res, next) {
     res.render('mainSearch.ejs')
+<<<<<<< HEAD
   },
   searchResults(req, res, next) {
     res.render('searchResults.ejs', {input: res.locals.input, result: res.locals.result})
