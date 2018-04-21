@@ -45,13 +45,65 @@ module.exports = {
   },
 
   onePerson(req, res, next) {
-    model.findOnePerson(req.params.id)
+    model.findOnePerson(parseInt(req.params.id))
       .then( (data) => {
         res.locals.contact = data;
+        res.locals.data= [];
         next();
       })
       .catch( (err) => {
         next(err);
       });
   },
+
+  personAllMoney(req, res, next) {
+    model.findGiftsByPerson(parseInt(req.params.id))
+      .then( (data) => {
+        res.locals.data = data;
+        next()
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  },
+
+  personAllNotes(req, res, next) {
+    model.findNotesByPerson(parseInt(req.params.id))
+      .then( (data) => {
+        res.locals.data = data;
+        next()
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  },
+
+  listFundraisers(req, res, next) {
+    model.findAllFundraisers()
+      .then( (data) => {
+        res.locals.fundraiser = data;
+        next()
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  },
+
+  showOneNote(req, res, next) {
+    model.findOneNote(req.params.id)
+      .then( (data) => {
+        res.locals.
+      })
+  }
+
+  destroyOneNote(req, res, next) {
+    model.destroyNote(parseInt(req.params.id))
+      .then( (data) => {
+        res.locals.redirect = data.personid;
+        next();
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  }
 }

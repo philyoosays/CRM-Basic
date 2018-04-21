@@ -21,14 +21,17 @@
   height: 100%;
 }
 
+h1 {
+  text-align: center;
+}
+
 .searchform {
   display: block;
   border: 3px solid salmon;
 }
 
 .main {
-  display: flex;
-  justify-content: center;
+
 /*  align-content: stretch;*/
   /*align-content: flex-start;*/
   border: 5px solid lime;
@@ -48,6 +51,34 @@
   width: 150px;
   padding: 50px;
   align-self: center;
+}
+
+.contact > p {
+  text-align: center;
+}
+
+.personbuttondiv {
+  border: 2px solid red;
+  display: flex;
+  justify-content: center;
+}
+
+.personbuttonul {
+  padding: 0;
+  margin: 0 auto;
+  border: 2px solid yellow;
+  flex
+}
+
+.personbutton {
+  display: inline-block;
+  background: salmon;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: "sans-serif";
+  margin: 0 auto;
+  text
 }
 
 .namesearch, .addysearch {

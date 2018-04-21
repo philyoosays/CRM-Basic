@@ -1,0 +1,30 @@
+<% include ./partials/boilerplate %>
+
+<div class="main">
+  <h1>Person View</h1>
+  <hr/>
+  <div class="contact">
+    <p><%= contact.prefix %> <%= contact.fname %> <%= contact.mname %> <%= contact.lname %> <%= contact.suffix %></p>
+    <p><%= contact.address %></p>
+    <p><%= contact.city %>, <%= contact.state %> <%= contact.zipcode %></p>
+  </div>
+  <form action="/notes/<%= data.id %>/edit?_method=put" method="post">
+    <input type="date" name="notedate" value="<%= data.notedate %>">
+    <label for="fundraiser">Fundraiser</label>
+    <select name="fundraiserid" id="fundraiser">
+      <% fundraiser.forEach( d => { %>
+        <% if(d.id === data.fundraiserid) { %>
+          <option selected="selected" value="<%= d.id %>"><%= fundraiser.fname %> <%= fundraiser.lname %></option>
+        <% } else { %>
+          <option value="<%= d.id %>"><%= fundraiser.fname %> <%= fundraiser.lname %></option>
+        <% } %>
+      <% }) %>
+    </select>
+    <input type="text" name="category" value="<%= data.category %>">
+    <label for="followup">Follow Up</label>
+    <input type="checkbox" name="followup" id="followup"><br/>
+    <label for="note">Note</label><br/>
+    <textarea name="note" rows="10" cols="30" id="note">
+  </form>
+</div>
+<% include ./partials/foot %>

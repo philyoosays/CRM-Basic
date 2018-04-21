@@ -72,8 +72,8 @@ id SERIAL PRIMARY KEY,
 personid INTEGER REFERENCES people(id),
 type TEXT,
 contact VARCHAR(255),
-perferred BOOLEAN,
-donotcontact BOOLEAN
+preferred BOOLEAN DEFAULT false,
+donotcontact BOOLEAN DEFAULT false
 );
 
 CREATE TABLE gifts (
@@ -84,7 +84,7 @@ closedate DATE NOT NULL,
 fundraiserid INTEGER REFERENCES fundraisers(id),
 campaignid INTEGER REFERENCES campaigns(id),
 donotthank BOOLEAN DEFAULT false,
-isrecurring BOOLEAN,
+isrecurring BOOLEAN DEFAULT false,
 appenddate DATE NOT NULL DEFAULT NOW(),
 datasource TEXT,
 acknowledged DATE,
@@ -98,9 +98,9 @@ personid INTEGER REFERENCES people(id),
 note TEXT,
 notedate DATE NOT NULL DEFAULT NOW(),
 fundraiserid INTEGER REFERENCES fundraisers(id),
-giftid INTEGER REFERENCES gifts(id),
+giftid INTEGER,
 category TEXT,
-followup BOOLEAN
+followup BOOLEAN DEFAULT false
 );
 
 INSERT INTO people
@@ -118,6 +118,50 @@ VALUES
 (3, '555 Artist St', 'Brooklyn', 'NY', '33333', true),
 (1, '1515 Idlewild Blvd', 'Fredericksburg', 'VA', '22401', false),
 (3, '22 Doogie Howser St', 'Yonkers', 'NY', '55555', false);
+
+INSERT INTO fundraisers
+(fname, lname) VALUES ('phil', 'yoo');
+
+INSERT INTO campaigns
+(campaignname, type, budgetcategory)
+VALUES
+('iget$$$', 'email', 'PhilsAstonMartin Fund');
+
+INSERT INTO gifts
+(personid, amount, closedate, fundraiserid, campaignid, paymenttype)
+VALUES
+(3, 1000.00, '4/20/2018', 1, 1, 'ACH'),
+(3, 100.00, '4/2/2018', 1, 1, 'cash'),
+(1, 100.00, '4/12/2018', 1, 1, 'card'),
+(2, 700.00, '4/23/2018', 1, 1, 'ACH'),
+(3, 1000.00, '4/21/2018', 1, 1, 'ACH'),
+(3, 600.00, '4/3/2018', 1, 1, 'ACH'),
+(1, 1000.00, '4/4/2018', 1, 1, 'ACH'),
+(2, 100.00, '4/9/2018', 1, 1, 'ACH'),
+(3, 200.00, '4/29/2018', 1, 1, 'ACH');
+
+INSERT INTO notes
+(personid, note, fundraiserid, category, followup)
+VALUES
+(1, 'what the fuck ever 1', 1, 'meeting', false),
+(2, 'what the fuck ever 2', 1, 'meeting', true),
+(3, 'what the fuck ever8', 1, 'meeting', false),
+(3, 'what the fuck ever3', 1, 'meeting', false),
+(1, 'what the fuck ever9', 1, 'meeting', true),
+(2, 'what the fuck ever7', 1, 'meeting', false),
+(2, 'what the fuck ever6', 1, 'meeting', false),
+(1, 'what the fuck ever5', 1, 'meeting', true);
+
+INSERT INTO contact
+(personid, type, contact, preferred)
+VALUES
+(1, 'email', 'q@q.com', true),
+(2, 'email', '1@q.com', true),
+(3, 'email', 'b@q.com', true),
+(1, 'phone', '123-445-4566', true),
+(2, 'phone', '555-555-5555', true),
+(1, 'email', 't@q.com', false),
+(3, 'email', 'z@q.com', false);
 
 -- \copy people
 -- (id, prefix, fname, mname, lname, suffix, mailuntil, occupation,

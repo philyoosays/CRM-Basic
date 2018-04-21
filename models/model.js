@@ -213,9 +213,10 @@ module.exports = {
   },
 
   destroyNote(id) {
-    return db.none(`
+    return db.one(`
       DELETE FROM notes
       WHERE id = $1
+      RETURNING personid
       `, id);
   },
 
@@ -290,14 +291,14 @@ module.exports = {
       FROM people JOIN address
       ON people.id = address.personid
       WHERE
-        people.id = $1,
-        person.active = true,
-        address.main = true
+        people.id = $1
+        AND people.active = true
+        AND address.main = true
       `, id);
   },
 
   findGiftsByPerson(id) {
-    return db.many(`
+    return db.any(`
       SELECT
         g.*,
         c.campaignname AS campaign,
@@ -312,17 +313,34 @@ module.exports = {
   },
 
   findNotesByPerson(id) {
-    return db.many(`
-      SELECT * FROM notes
-      WHERE personid = $1
+    return db.any(`
+      SELECT
+        n.*,
+        f.fname AS firstname, f.lname AS lastname
+      FROM notes AS n JOIN fundraisers AS f
+        ON n.fundraiserid = f.id
+      WHERE n.personid = $1
       `, id);
   },
 
   findContactsByPerson(id) {
-    return db.many(`
+    return db.any(`
       SELECT * FROM contact
       WHERE personid = $1
       `, id);
+  },
+
+  findAllFundraisers() {
+    return db.many(`
+      SELECT * FROM fundraisers
+      `);
+  },
+
+  findOneNote(id) {
+    return db.one(`
+      SELECT * FROM notes
+      WHERE id = $1
+      `, id)
   },
 
 };

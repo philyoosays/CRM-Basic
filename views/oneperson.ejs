@@ -1,37 +1,70 @@
 <% include ./partials/boilerplate %>
 
 <div class="main">
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   <h1>Person View</h1>
+  <hr/>
   <div class="contact">
     <p><%= contact.prefix %> <%= contact.fname %> <%= contact.mname %> <%= contact.lname %> <%= contact.suffix %></p>
     <p><%= contact.address %></p>
-    <p><%= contact.city $>, <%= contact.state %> <%= contact.zipcode %></p>
+    <p><%= contact.city %>, <%= contact.state %> <%= contact.zipcode %></p>
   </div>
   <div class="stats">
     <h1>This is reserved for statistical data</h1>
   </div>
-  <div class="personbuttons">
-    <ul>
-      <li>Search Contacts</li>
-      <li>Show All Gifts</li>
-      <li>More Contact Info</li>
+  <div class="personbuttondiv">
+    <ul class="personbuttonul">
+      <li class="personbutton">
+          <form action="/search" method="get">
+            <input type="submit">
+          </form>
+          Search Contacts</li>
+      <li class="personbutton">
+          <form action="/people/<%= contact.id %>/gifts" method="get">
+            <input type="submit">
+          </form>
+          Show All Gifts</li>
+      <li class="personbutton">
+          <form action="/people/<%= contact.id %>/notes" method="get">
+            <input type="submit">
+          </form>
+          Show All Notes</li>
+      <li class="personbutton">
+          <form action="/search" method="get">
+            <input type="submit">
+          </form>
+          More Contact Info</li>
     </ul>
   </div>
   <div class="results">
-    <% if(data.amount === undefined) {
-      <% data.forEach( (d) => { %>
-        <p>Amount: <%= d.amount %> | Date: <%= d.closedate %> | Campaign: <%= d.campaign
+    <% if(data.length === 0) { %>
+      <hr />
+      <h2>No Data Available</h2>
+      <hr />
+    <% } else { %>
+      <% data.forEach (d => { %>
+        <% if(Object.keys(d).indexOf('isrecurring') !== -1) { %>
+          <p>Amount: $<%= d.amount %> <% '\t' %>| Date: <%= d.closedate.toString().slice(0,-23) %> | Campaign: <%= d.campaign %> | Fundraiser: <%= d.firstname %> <%= d.lastname %></p>
+          <hr />
+        <% } %>
+        <% if(Object.keys(d).indexOf('type') !== -1) { %>
+          <a href="/contact/<%= d.id %>/edit"><p><%= d.type %>: <%= d.contact %> | Preferred? <%= d.preferred %></p></a>
+          <hr />
+        <% } %>
+        <% if(Object.keys(d).indexOf('note') !== -1) { %>
+          <p>Note Date: <%= d.notedate.toString().slice(0,-14) %> | Made By: <%= d.firstname %> <%= d.lastname %></p>
+          <p>Category: <%= d.category %> | Follow Up: <%= d.followup %></p>
+          <p>Note:</p>
+          <p><%= d.note %></p>
+          <form action="/notes/<%= d.id %>/edit" method="get">
+            <input type="submit" value="Edit Note">
+          </form>
+          <form action="/notes/<%= d.id %>?_method=delete" method="post">
+            <input type="submit" value="Delete Note">
+          </form>
+          <hr />
+        <% } %>
       <% }) %>
     <% } %>
-
   </div>
 </div>
 <script>
@@ -39,8 +72,7 @@
   const button2 = document.querySelector('li:nth-of-type(2)');
   const button3 = document.querySelector('li:nth-of-type(3)');
   button1.addEventListener('click', () => {
-
     location
   })
 </script>
-
+<% include ./partials/foot %>
