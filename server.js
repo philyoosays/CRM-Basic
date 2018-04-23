@@ -9,6 +9,8 @@ const methodOverride = require('method-override')
 const searchRoutes = require('./routes/searchRoutes');
 const peopleRoutes = require('./routes/peopleRoutes');
 const noteRoutes = require('./routes/noteRoutes');
+const contactRoutes = require('./routes/contactRoutes');
+const giftRoutes = require('./routes/giftRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,6 +37,8 @@ app.get('/', (req, res) => {
 app.use('/search', searchRoutes);
 app.use('/people', peopleRoutes);
 app.use('/notes', noteRoutes);
+app.use('/contacts', contactRoutes);
+app.use('/gifts', giftRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server up and listening on port ${PORT}, in ${app.get('env')} mode.`);

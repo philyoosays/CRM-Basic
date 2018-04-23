@@ -13,7 +13,8 @@
     "morgan": "^1.9.0",
     "npm": "^5.8.0",
     "path": "^0.12.7",
-    "pg-promise": "^8.3.3"
+    "pg-promise": "^8.3.3",
+    "xml-js": "^1.6.2"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

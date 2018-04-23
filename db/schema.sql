@@ -96,7 +96,7 @@ CREATE TABLE notes (
 id SERIAL PRIMARY KEY,
 personid INTEGER REFERENCES people(id),
 note TEXT,
-notedate DATE NOT NULL DEFAULT NOW(),
+notedate TIMESTAMP NOT NULL DEFAULT NOW(),
 fundraiserid INTEGER REFERENCES fundraisers(id),
 giftid INTEGER,
 category TEXT,
@@ -120,7 +120,11 @@ VALUES
 (3, '22 Doogie Howser St', 'Yonkers', 'NY', '55555', false);
 
 INSERT INTO fundraisers
-(fname, lname) VALUES ('phil', 'yoo');
+(fname, lname)
+VALUES
+('phil', 'yoo'),
+('johnny', 'cash'),
+('jimmy', 'valentine');
 
 INSERT INTO campaigns
 (campaignname, type, budgetcategory)

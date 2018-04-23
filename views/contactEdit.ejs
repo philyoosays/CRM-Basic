@@ -1,0 +1,36 @@
+<% include ./partials/personInfo %>
+
+  <form action="/contacts/<%= data.id %>/edit?_method=put" method="post">
+    <label for="type">Type</label>
+      <input type="text" id="type" name="type" list="types" value="<%= data.type %>">
+        <datalist id="types">
+          <% type.forEach( (d) => { %>
+            <option value="<%= d.type %>"><%= d.type %></option>
+          <% }) %>
+        </datalist>
+    <label for="contact">Contact</label>
+      <input type="text" id="contact" name="contact" value="<%= data.contact %>">
+    <br />
+    <label for="preferred">Preferred</label>
+      <select name="preferred" id="preferred">
+        <% if(data.preferred === false) { %>
+          <option value="false" selected>Not preferred</option>
+          <option value="true">Preferred</option>
+        <% } else if(data.preferred === true) { %>
+          <option value="true" selected>Preferred</option>
+          <option value="false">Not preferred</option>
+        <% } %>
+      </select>
+      <br/>
+    <label for="donotcontact">Do Not Contact</label>
+      <select name="donotcontact" id="donotcontact">
+        <% if(data.donotcontact === true) { %>
+          <option value="false">OK To Contact</option>
+          <option value="true" selected>Do Not Contact</option>
+        <% } else { %>
+          <option value="true">Do Not Contact</option>
+          <option value="false" selected>OK To Contact</option>
+        <% } %>
+      </select>
+
+<% include ./partials/saveCancelButtons %>

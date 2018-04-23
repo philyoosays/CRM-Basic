@@ -5,9 +5,19 @@ const control = require('../controllers/controller');
 const app = express.Router();
 
 app.route('/results')
-  .get(control.findPeople, view.searchResults, view.show404)
+  .get(
+    control.findPeople,
+    view.searchResults,
+    view.show404
+    )
+
+app.route('/api')
+  .get(control.zillowAPI, view.show404)
 
 app.route('/')
-  .get(view.search, view.show404)
+  .get(
+    view.search,
+    view.show404
+    )
 
 module.exports = app;

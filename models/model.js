@@ -52,19 +52,17 @@ module.exports = {
   },
 
   createContact(data) {
-    return db.one(`
-      WITH thePerson AS (
-        INSERT INTO people (
-          personid, type, contact, preferred, donotcontact
-        )
-        VALUES (
-          $/id/,
-          $/type/,
-          $/contact/,
-          $/preferred/,
-          $/donotcontact/
-        )
-        RETURNING *
+    return db.none(`
+      INSERT INTO contact (
+        personid, type, contact, preferred, donotcontact
+      )
+      VALUES (
+        $/personid/,
+        $/type/,
+        $/contact/,
+        $/preferred/,
+        $/donotcontact/
+      )
       `, data);
   },
 
@@ -116,7 +114,6 @@ module.exports = {
     return db.one(`
       UPDATE contact
       SET
-        personid = $/id/,
         type = $/type/,
         contact = $/contact/,
         preferred = $/preferred/,
@@ -128,9 +125,10 @@ module.exports = {
   },
 
   destroyContact(id) {
-    return db.none(`
+    return db.one(`
       DELETE FROM contact
       WHERE id = $1
+      RETURNING personid
       `, id);
   },
 
@@ -138,18 +136,17 @@ module.exports = {
     return db.one(`
       INSERT INTO gifts (
         personid, amount, closedate, fundraiserid, campaignid,
-        donotthank, isrecurring, appenddate, datasource,
+        donotthank, isrecurring, datasource,
         acknowledged, sourceid, paymenttype
       )
       VALUES (
-        $/id/,
+        $/personid/,
         $/amount/,
         $/closedate/,
         $/fundraiserid/,
         $/campaignid/,
         $/donotthank/,
         $/isrecurring/,
-        $/appenddate/,
         $/datasource/,
         $/acknowledged/,
         $/sourceid/,
@@ -181,19 +178,19 @@ module.exports = {
   },
 
   createNote(data) {
-    return db.one(`
+    return db.none(`
       INSERT INTO notes (
-        personid, note, fundraiserid, giftid,
-        category, followup
+        personid, note, fundraiserid,
+        category, followup, notedate
       )
       VALUES (
-        $/id/,
+        $/personid/,
         $/note/,
         $/fundraiserid/,
-        $/giftid/,
         $/category/,
-        $/followup/
-      ) RETURNING *
+        $/followup/,
+        $/notedate/
+      )
       `, data);
   },
 
@@ -202,8 +199,8 @@ module.exports = {
       UPDATE notes
       SET
         note = $/note/,
+        notedate = $/notedate/,
         fundraiserid = $/fundraiserid/,
-        giftid = $/giftid/,
         category = $/category/,
         followup = $/followup/
       WHERE
@@ -309,6 +306,7 @@ module.exports = {
       JOIN fundraisers AS f
         ON g.fundraiserid = f.id
       WHERE g.personid = $1
+      ORDER BY closedate DESC
       `, id);
   },
 
@@ -320,6 +318,7 @@ module.exports = {
       FROM notes AS n JOIN fundraisers AS f
         ON n.fundraiserid = f.id
       WHERE n.personid = $1
+      ORDER BY n.notedate DESC
       `, id);
   },
 
@@ -327,6 +326,7 @@ module.exports = {
     return db.any(`
       SELECT * FROM contact
       WHERE personid = $1
+      ORDER BY preferred DESC
       `, id);
   },
 
@@ -340,8 +340,47 @@ module.exports = {
     return db.one(`
       SELECT * FROM notes
       WHERE id = $1
-      `, id)
+      `, id);
   },
+
+  findAllNoteCategories() {
+    return db.any(`
+      SELECT category
+      FROM notes
+      GROUP BY category
+      `);
+  },
+
+  findAllContactTypes() {
+    return db.any(`
+      SELECT type
+      FROM contact
+      GROUP BY type
+      `);
+  },
+
+  findOneContact(id) {
+    return db.one(`
+      SELECT * FROM contact
+      WHERE id = $1
+      `, id);
+  },
+
+  listAllCampaigns() {
+    return db.many(`
+      SELECT campaignname, id
+      FROM campaigns
+      ORDER BY startdate DESC
+      `);
+  },
+
+  listAllPaymentTypes() {
+    return db.many(`
+      SELECT paymenttype
+      FROM gifts
+      GROUP BY paymenttype
+      `)
+  }
 
 };
 

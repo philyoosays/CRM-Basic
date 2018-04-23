@@ -1,13 +1,9 @@
-<% include ./partials/boilerplate %>
+<% include ./partials/personInfo %>
 
-<div class="main">
-  <h1>Person View</h1>
-  <hr/>
-  <div class="contact">
-    <p><%= contact.prefix %> <%= contact.fname %> <%= contact.mname %> <%= contact.lname %> <%= contact.suffix %></p>
-    <p><%= contact.address %></p>
-    <p><%= contact.city %>, <%= contact.state %> <%= contact.zipcode %></p>
-  </div>
+  <form action="/people/<%= contact.id %>/edit" method="get">
+    <input type=""
+  </form>
+
   <div class="stats">
     <h1>This is reserved for statistical data</h1>
   </div>
@@ -29,30 +25,64 @@
           </form>
           Show All Notes</li>
       <li class="personbutton">
-          <form action="/search" method="get">
+          <form action="/people/<%= contact.id %>/contacts" method="get">
             <input type="submit">
           </form>
           More Contact Info</li>
     </ul>
   </div>
+  <div>
+    <hr />
+      <% if(mode === 'gifts') { %>
+        <form action="/gifts/<%= contact.id %>/new" method="get">
+          <input type="submit" value="New Gift">
+        </form>
+      <% } else if(mode === 'contacts') { %>
+        <form action="/contacts/<%= contact.id %>/new" method="get">
+          <input type="submit" value="New Contact">
+        </form>
+      <% } else if(mode === 'notes') { %>
+        <form action="/notes/<%= contact.id %>/new" method="get">
+          <input type="submit" value="New Note">
+        </form>
+      <% } %>
+    <hr />
+  </div>
   <div class="results">
     <% if(data.length === 0) { %>
       <hr />
-      <h2>No Data Available</h2>
+      <h1>Select Data To Be Shown</h1>
       <hr />
     <% } else { %>
       <% data.forEach (d => { %>
         <% if(Object.keys(d).indexOf('isrecurring') !== -1) { %>
-          <p>Amount: $<%= d.amount %> <% '\t' %>| Date: <%= d.closedate.toString().slice(0,-23) %> | Campaign: <%= d.campaign %> | Fundraiser: <%= d.firstname %> <%= d.lastname %></p>
+          <p>Amount: $<%= d.amount %></p>
+          <p>Date: <%= d.closedate.toString().slice(0,-23) %></p>
+          <p>Campaign: <%= d.campaign %></p>
+          <p>Fundraiser: <%= d.firstname %> <%= d.lastname %></p>
           <hr />
         <% } %>
         <% if(Object.keys(d).indexOf('type') !== -1) { %>
-          <a href="/contact/<%= d.id %>/edit"><p><%= d.type %>: <%= d.contact %> | Preferred? <%= d.preferred %></p></a>
+          <%= d.type %>: <%= d.contact %> <% if(d.preferred === true) { %><span> - Preferred</span><% } %></p>
+          <% if(d.donotcontact === true) { %>
+            <p>Do Not Contact</p>
+          <% } %>
+          <form action="/contacts/<%= d.id %>/edit" method="get">
+            <input type="submit" value="Edit Contact">
+          </form>
+          <form action="/contacts/<%= d.id %>?_method=delete" method="post">
+            <input type="submit" value="Delete Contact">
+          </form>
           <hr />
         <% } %>
         <% if(Object.keys(d).indexOf('note') !== -1) { %>
           <p>Note Date: <%= d.notedate.toString().slice(0,-14) %> | Made By: <%= d.firstname %> <%= d.lastname %></p>
-          <p>Category: <%= d.category %> | Follow Up: <%= d.followup %></p>
+          <p>Category: <%= d.category %> | Follow Up:
+            <% if(d.followup === true) { %>
+              <span>Need Follow Up</span>
+            <% } else { %>
+              <span>Up To Date</span>
+            <% } %></p>
           <p>Note:</p>
           <p><%= d.note %></p>
           <form action="/notes/<%= d.id %>/edit" method="get">

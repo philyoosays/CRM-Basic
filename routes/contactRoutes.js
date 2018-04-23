@@ -6,39 +6,37 @@ const app = express.Router();
 
 app.route('/:id/edit')
   .get(
-    control.modeNewNote,
-    control.listFundraisers,
-    control.findAllNoteCategories,
-    control.showOneNote,
+    control.modeNewContact,
+    control.getAllContactTypes,
+    control.showOneContact,
     control.onePersonEditView,
-    view.showNoteEditView,
+    view.showContactEditView,
     view.show404
     )
   .put(
-    control.changeOneNote,
-    view.handleNoteChange,
+    control.changeOneContact,
+    view.handleContactChange,
     view.show406
     )
 
 app.route('/:id/new')
   .get(
-    control.modeNewNote,
+    control.modeNewContact,
+    control.getAllContactTypes,
     control.onePerson,
-    control.findAllNoteCategories,
-    control.listFundraisers,
-    view.showNoteNewView,
+    view.showContactNewView,
     view.show404
     )
   .post(
-    control.addNewNote,
-    view.handleNoteChange,
+    control.addNewContact,
+    view.handleContactChange,
     view.show406
     )
 
 app.route('/:id')
   .delete(
-    control.destroyOneNote,
-    view.handleNoteChange,
+    control.destroyOneContact,
+    view.handleContactChange,
     view.show404
     )
 

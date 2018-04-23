@@ -1,30 +1,38 @@
-<% include ./partials/boilerplate %>
+<% include ./partials/personInfo %>
 
-<div class="main">
-  <h1>Person View</h1>
-  <hr/>
-  <div class="contact">
-    <p><%= contact.prefix %> <%= contact.fname %> <%= contact.mname %> <%= contact.lname %> <%= contact.suffix %></p>
-    <p><%= contact.address %></p>
-    <p><%= contact.city %>, <%= contact.state %> <%= contact.zipcode %></p>
-  </div>
   <form action="/notes/<%= data.id %>/edit?_method=put" method="post">
-    <input type="date" name="notedate" value="<%= data.notedate %>">
+    <label for="date">Date</label>
+    <input type="date" id="date" name="notedate" value="<%= data.notedateinput %>">
     <label for="fundraiser">Fundraiser</label>
     <select name="fundraiserid" id="fundraiser">
-      <% fundraiser.forEach( d => { %>
+      <% fundraiser.forEach( (d) => { %>
         <% if(d.id === data.fundraiserid) { %>
-          <option selected="selected" value="<%= d.id %>"><%= fundraiser.fname %> <%= fundraiser.lname %></option>
+          <option value="<%= d.id %>" selected><%= d.fname %> <%= d.lname %></option>
         <% } else { %>
-          <option value="<%= d.id %>"><%= fundraiser.fname %> <%= fundraiser.lname %></option>
+          <option value="<%= d.id %>"><%= d.fname %> <%= d.lname %></option>
         <% } %>
       <% }) %>
     </select>
-    <input type="text" name="category" value="<%= data.category %>">
+    <label for="category">Category</label>
+    <input type="text" id="category" name= "category" list="cats" value="<%= data.category %>">
+      <datalist id="cats">
+        <% category.forEach( (d) => { %>
+            <option value="<%= d.category %>"><%= d.category %></option>
+        <% }) %>
+      </datalist>
+    <br/>
     <label for="followup">Follow Up</label>
-    <input type="checkbox" name="followup" id="followup"><br/>
+    <select name="followup" id="followup">
+      <% if(data.followup === true) { %>
+        <option value="true" selected>Need Follow Up</option>
+        <option value="false">Up To Date</option>
+      <% } else { %>
+        <option value="false" selected>Up To Date</option>
+        <option value="true">Need Follow Up</option>
+      <% } %>
+    </select>
+    <br/>
     <label for="note">Note</label><br/>
-    <textarea name="note" rows="10" cols="30" id="note">
-  </form>
-</div>
-<% include ./partials/foot %>
+    <textarea name="note" rows="10" cols="85" id="note"><%= data.note %></textarea>
+
+<% include ./partials/saveCancelButtons %>
