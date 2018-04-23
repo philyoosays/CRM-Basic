@@ -1,7 +1,7 @@
 <% include ./partials/personInfo %>
 
-  <form action="/people/<%= contact.id %>/edit" method="get">
-    <input type=""
+  <form action="/people/<%= contact.id %>/<%= contact.addressid %>/edit" method="get">
+    <input type="submit" value="Edit Person">
   </form>
 
   <div class="stats">

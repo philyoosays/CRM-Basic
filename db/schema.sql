@@ -45,7 +45,9 @@ CREATE TABLE fundraisers (
 id SERIAL PRIMARY KEY,
 fname TEXT,
 lname TEXT,
-goal FLOAT(2)
+goal FLOAT(2),
+username VARCHAR(255) UNIQUE NOT NULL,
+password_digest TEXT NOT NULL
 );
 
 -- CREATE TABLE peopleaddress (
@@ -120,11 +122,11 @@ VALUES
 (3, '22 Doogie Howser St', 'Yonkers', 'NY', '55555', false);
 
 INSERT INTO fundraisers
-(fname, lname)
+(fname, lname, username, password_digest)
 VALUES
-('phil', 'yoo'),
-('johnny', 'cash'),
-('jimmy', 'valentine');
+('phil', 'yoo', 'pyoo'),
+('johnny', 'cash', 'jcash'),
+('jimmy', 'valentine', 'jvalentine');
 
 INSERT INTO campaigns
 (campaignname, type, budgetcategory)

@@ -1,10 +1,17 @@
-const convert = require('xml-js');
+require('dotenv').config();
+const parseString = require('xml2js').parseString;
+const express = require('express');
+const http = require('http')
+
 const model = require('../models/model');
+
+const app = express();
+app.set('apiKey', process.env.APIKEY)
 
 module.exports = {
 
   ///////////////////////////////////
-  // LISTS///////////////////////////
+  // LISTS //////////////////////////
   ///////////////////////////////////
 
   findPeople(req, res, next) {
@@ -287,7 +294,36 @@ module.exports = {
       })
   },
 
+  editPerson(req, res, next) {
+    req.body.personid = parseInt(req.params.id);
+    req.body.addressid = parseInt(req.params.addyid);
+    res.locals.tempdata = req.body;
+    console.log('all the data: ', res.locals.tempdata)
+    model.updatePerson(req.body)
+      .then( (data) => {
+        console.log('moving onto address')
+        next();
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  },
 
+  editAddress(req, res, next) {
+    console.log('editaddress: ', res.locals.tempdata)
+    model.updateAddress(res.locals.tempdata)
+      .then( (data) => {
+        console.log('edit address ran')
+        next()
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  },
+
+  makePerson(req, res, next) {
+
+  },
 
   //////////////////////////////////
   // LABEL MAKERS //////////////////
@@ -308,28 +344,45 @@ module.exports = {
     next()
   },
 
+  modeEdit(req, res, next) {
+    res.locals.mode = 'edit';
+    next()
+  },
+
+  modeNew(req, res, next) {
+    res.locals.mode = 'new'
+    next()
+  },
+
   ///////////////////////////////////
   // API CALL ///////////////////////
   ///////////////////////////////////
 
   zillowAPI(req, res, next) {
-    res.locals.address = '2272 Victory Blvd'
-    res.locals.city = 'Staten Island'
-    res.locals.state = 'NY'
-    res.locals.address = res.locals.address.split(' ').join('+');
-    res.locals.city = res.locals.city.split(' ').join('+');
-    res.locals.city = res.locals.city + '%2C+' + res.locals.state;
-    console.log('http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1gde99cc557_10irx&address=' + res.locals.address + '&citystatezip=' + res.locals.city)
-    fetch('http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1gde99cc557_10irx&address=' + res.locals.address + '&citystatezip=' + res.locals.city)
-      .then( (data) => {
-        // res.locals.jsonData = convert.xml2json(data, { compact: true, spaces: 4 });
-        // res.json(res.locals.jsonData)
-        res.send(data);
-      })
-      .catch( (err) => {
-        next(err)
-      })
-  }
+    let address = res.locals.contact.address;
+    let city = res.locals.contact.city;
+    let state = res.locals.contact.state;
+    address = address.split(' ').join('+');
+    city = city.split(' ').join('+');
+    city = city + '%2C+' + state;
+
+    const url = 'http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=' + app.get('apiKey') + '&address=' + address + '&citystatezip=' + city;
+
+    var apiCall = http.get(url, function (response) {
+        var completeResponse = '';
+        response.on('data', function (chunk) {
+          completeResponse += chunk;
+        });
+        response.on('end', function() {
+          parseString(completeResponse, (err, result) => {
+            res.json(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0])
+          })
+        })
+    }).on('error', function (e) {
+        console.log('problem with request: ' + e.message);
+    });
+
+  },
 
 }
 

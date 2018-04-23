@@ -5,6 +5,7 @@
     <div class="searchtitle">
       <h1>Search Form</h1>
     </div>
+    <% include ./partials/newpersonbutton %>
     <form action="/search/results" method="get">
       <div class="namesearch">
         <input type="text" name="prefix" placeholder="prefix" value="<%= input.prefix %>">

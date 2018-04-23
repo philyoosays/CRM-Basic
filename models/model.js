@@ -5,9 +5,7 @@ module.exports = {
     return db.one(`
       INSERT INTO people (
         prefix, fname, nickname, mname, lname, suffix,
-        mailuntil, occupation, onlyannualreceipt,
-        mailothermonth, mailquarterly, mailtwiceannual,
-        mailonceannual, donotshare
+        onlyannualreceipt, active
       )
       VALUES (
         $/prefix/,
@@ -16,21 +14,15 @@ module.exports = {
         $/mname/,
         $/lname/,
         $/suffix/,
-        $/mailuntil/,
-        $/occupation/,
         $/onlyannualreceipt/,
-        $/mailothermonth/,
-        $/mailquarterly/,
-        $/mailtwiceannual/,
-        $/mailonceannual/,
-        $/donotshare/
+        $/active/
       )
-      RETURNING *
+      RETURNING id
       `, data);
   },
 
   createAddress(data) {
-    return db.one(`
+    return db.none(`
       INSERT INTO address (
         personid, address, city, state, zipcode,
         plus4, main, activestart, activeend, donotmail
@@ -41,13 +33,8 @@ module.exports = {
         $/city/,
         $/state/,
         $/zipcode/,
-        $/plus4/,
-        $/main/,
-        $/activestart/,
-        $/activeend/,
-        $/donotmail/
+        $/main/
       )
-      RETURNING *
       `, data);
   },
 
@@ -72,41 +59,29 @@ module.exports = {
       SET
         prefix = $/prefix/,
         fname = $/fname/,
-        nickname = $/nickname/,
         mname = $/mname/,
         lname = $/lname/,
         suffix = $/suffix/,
-        mailuntil = $/mailuntil/,
-        occupation = $/occupation/,
         onlyannualreceipt = $/onlyannualreceipt/,
-        mailothermonth = $/mailothermonth/,
-        mailquarterly = $/mailquarterly/,
-        mailtwiceannual = $/mailtwiceannual/,
-        mailonceannual = $/mailonceannual/,
-        donotshare = $/donotshare/,
         active = $/active/
       WHERE
-        id = $/id/
-      RETURNING *
+        id = $/personid/
+      RETURNING id
       `, data);
   },
 
   updateAddress(data) {
-    return db.one(`
+    return db.none(`
       UPDATE address
       SET
-        personid = $/id/,
+        personid = $/personid/,
         address = $/address/,
         city = $/city/,
         state = $/state/,
         zipcode = $/zipcode/,
-        plus4 = $/plus4/,
-        main = $/main/,
-        activestart = $/activestart/,
-        donotmail = $/donotmail/
+        main = $/main/
       WHERE
         id = $/addressid/
-      RETURNING *
       `, data);
   },
 
@@ -284,7 +259,13 @@ module.exports = {
 
   findOnePerson(id) {
     return db.one(`
-      SELECT people.*, address.*
+      SELECT people.*,
+        address.id AS addressid,
+        address.address,
+        address.city,
+        address.state,
+        address.zipcode,
+        address.main
       FROM people JOIN address
       ON people.id = address.personid
       WHERE
@@ -380,6 +361,17 @@ module.exports = {
       FROM gifts
       GROUP BY paymenttype
       `)
+  },
+
+  updateFundraiser(data) {
+    return db.one(`
+      UPDATE fundraisers
+      SET
+        password_digest = $/pwdHash/
+      WHERE
+        id = $/fundraiserid/
+      RETURNING *
+      `, data);
   }
 
 };

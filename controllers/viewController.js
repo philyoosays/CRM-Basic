@@ -65,6 +65,15 @@ module.exports = {
         mode: res.locals.mode,
       })
   },
+  showPersonEditView(req, res, next) {
+    res.render('personEdit.ejs',
+    {
+      contact: res.locals.contact,
+    })
+  },
+  showPersonNewView(req, res, next) {
+    res.render('personNew.ejs')
+  },
   personProfile(req, res, next) {
     res.render('oneperson.ejs',
       {
@@ -82,8 +91,16 @@ module.exports = {
   },
   handleGiftChange(req, res, next) {
     res.redirect('/people/' + res.locals.redirect + '/gifts');
+  },
+  handlePersonChange(req, res, next) {
+    res.redirect('/people/' + res.locals.tempdata.personid);
+  },
+  tester(req, res, next) {
+    res.send(res.locals.data)
+  },
+  showLoginForm(req, res, next) {
+    res.render('login.ejs')
   }
-
 }
 
 

@@ -11,8 +11,8 @@ app.route('/results')
     view.show404
     )
 
-app.route('/api')
-  .get(control.zillowAPI, view.show404)
+app.route('/:id/api')
+  .get(control.onePerson, control.zillowAPI, view.tester, view.show404)
 
 app.route('/')
   .get(
