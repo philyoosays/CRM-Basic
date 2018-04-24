@@ -13,7 +13,6 @@ const config = {
   host: 'localhost',
   port: 5432,
   database: 'crm_unit02'
-  username:
 };
 
 const db = pgp(config);
