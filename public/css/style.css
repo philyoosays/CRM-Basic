@@ -14,6 +14,15 @@ input[type="submit"] {
   border-radius: 10px;
 }
 
+input[type="submit"]:hover {
+  background: #80B830;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  padding: 15px 25px 15px 25px;
+  border-radius: 10px;
+}
+
 input[type="text"] {
   font-family: 'Roboto', sans-serif;
   font-size: 12px;
