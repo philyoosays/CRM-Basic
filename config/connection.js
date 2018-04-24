@@ -4,6 +4,7 @@ const app = express();
 
 app.set('database', process.env.DATABASE)
 
+
 const pgp = require('pg-promise')({
   query: q => console.log(q.query),
 });
@@ -11,7 +12,8 @@ const pgp = require('pg-promise')({
 const config = {
   host: 'localhost',
   port: 5432,
-  database: app.get('database')
+  database: 'crm_unit02'
+  username:
 };
 
 const db = pgp(config);
