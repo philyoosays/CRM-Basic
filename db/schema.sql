@@ -106,20 +106,72 @@ followup BOOLEAN DEFAULT false
 );
 
 INSERT INTO people
-(prefix, fname, lname, active)
+(prefix, fname, mname, lname, suffix, active)
 VALUES
-('hello', 'phil', 'yoo', true),
-('that', 'kenny', 'isnofun', true),
-('mr.', 'andrew', 'craft', true);
+('', 'Phil', 'Yoo', true),
+('','Evelyn','','Gustafson','',TRUE),
+('','Richard','','Blomer','',TRUE),
+('','Domenick','','DAdamo','',TRUE),
+('','Shirley','','Martin','',TRUE),
+('','James','','Carroll','',TRUE),
+('','Margaret','','Tripp','',TRUE),
+('','Joan','','Reilly','',TRUE),
+('','Mary Lou','','Selby','',TRUE),
+('','Adam','','Kormanski','',TRUE),
+('','Thomas','','Calvario','',TRUE),
+('','Emma','','Cornelius','',TRUE),
+('','Nathan','','Stirewalt','',TRUE),
+('Mr.','Jerome','','Obringer','',TRUE),
+('','Lynn','','Heitman','',TRUE),
+('','Judith','','Flood','',TRUE),
+('Mr.','Joseph','T.','Lohmueller','',TRUE),
+('','Mark','','Spindler','',TRUE),
+('Ms.','Amy','','Kramer','',TRUE),
+('','Elvina','','Krekler','',TRUE),
+('','Jenni','','Brazda','',TRUE),
+('','Martin','','Braun','',TRUE),
+('Mr.','Albert','','Czakowski','',TRUE),
+('Mr. & Mrs.','Mark & Heidi','','Unkrich','',TRUE),
+('','Mary','','Williams','',TRUE),
+('','Carl','','Hatley','',TRUE),
+('','Anna','','Esten','',TRUE),
+('','Florence','','Fortune','',TRUE),
+('Ms.','Rose','','Epp','',TRUE),
+('','Arlene','','Martin','',TRUE);
 
 INSERT INTO address
 (personid, address, city, state, zipcode, main)
 VALUES
-(1, '123 Main St', 'New York', 'NY', '12345', true),
-(2, '456 Design st', 'Astoria', 'NY', '01203', true),
-(3, '555 Artist St', 'Brooklyn', 'NY', '33333', true),
-(1, '1515 Idlewild Blvd', 'Fredericksburg', 'VA', '22401', false),
-(3, '22 Doogie Howser St', 'Yonkers', 'NY', '55555', false);
+(1, '1515 Idlewild Blvd', 'Fredericksburg', 'VA', '22401', true),
+(2,'606 Forrest Ave','Cleburne','TX','76033',TRUE),
+(3,'5811 State Route 128','Cleves','OH','45002',TRUE),
+(4,'6520 Hanover Ave','Richmond','VA','23226',TRUE),
+(5,'1373 Flanagan Dr','Christiansburg','VA','24073',TRUE),
+(6,'331 W Dayton Ave','Burlingame','KS','66413',TRUE),
+(7,'78 Armory Rd','Milford','NH','03055',TRUE),
+(8,'3815 NE 19th St Cir','Ocala','FL','34470',TRUE),
+(9,'15949 Georgia Ave','Paramount','CA','90723',TRUE),
+(10,'10408 Raystown Rd','Saxton','PA','16678',TRUE),
+(11,'97 Neversink Dr','Port Jervis','NY','12771',TRUE),
+(12,'4211 Suttle Pl','Matthews','NC','28104',TRUE),
+(13,'2210 Nellie St','Kannapolis','NC','28083',TRUE),
+(14,'1401 State Route 219','Fort Recovery','OH','45846',TRUE),
+(15,'905 Fairlawn Ave','Libertyville','IL','60048',TRUE),
+(16,'763 Red Fox Run','Fond Du Lac','WI','54937',TRUE),
+(17,'23 Pike St','Cincinnati','OH','45215',TRUE),
+(18,'53 Pebble Ln','Deer Park','NY','11729',TRUE),
+(19,'2030 Coriander Dr','West Salem','OH','44287',TRUE),
+(20,'1187 U S Route 250','Adena','OH','43901',TRUE),
+(21,'550 E Hillcrest Dr','Lincoln','NE','68520',TRUE),
+(22,'119 Kristens Court Dr','Mooresville','NC','28115',TRUE),
+(23,'109 Carrington Court','Edwardsville','IL','62025',TRUE),
+(24,'1224 W Court Ave','Winterset','IA','50273',TRUE),
+(25,'15519 E 42nd Terrace S','Independence','MO','64055',TRUE),
+(26,'12407 Fox Hollow Court','Bakersfield','CA','93312',TRUE),
+(27,'521 Spruce St','Lykens','PA','17048',TRUE),
+(28,'20 Eades St','Branford','CT','06405',TRUE),
+(29,'11617 E 30th Ave','Buhler','KS','67522',TRUE),
+(30,'36144 Adobe Dr','Fremont','CA','94536',TRUE);
 
 INSERT INTO fundraisers
 (fname, lname, username, password_digest)

@@ -1,47 +1,69 @@
 <% include ./partials/boilerplate %>
 
-<h1>New Person View</h1>
+<div class="topbar">
+  <h1>New Person View</h1>
+</div>
   <form action="/people/new" method="post">
-    <label for="prefix">Prefix</label>
-      <input type="text" id="prefix" name="prefix" placeholder="Prefix"><br />
-    <label for="fname">First Name</label>
-      <input type="text" id="fname" name="fname" placeholder="First Name"><br />
-    <label for="mname">Middle Name</label>
-      <input type="text" id="mname" name="mname" placeholder="Middle Name"><br />
-    <label for="lname">Last Name</label>
-      <input type="text" id="lname" name="lname" placeholder="Last Name"><br />
-    <label for="suffix">Suffix</label>
-      <input type="text" id="suffix" name="suffix" placeholder="Suffix"><br />
+    <div class="searchcontainer">
+      <div class="namesearch">
+      <label for="prefix">Prefix</label>
+          <input type="text" id="prefix" name="prefix" placeholder="Prefix">
+          <br />
+        <label for="fname">First Name</label>
+          <input type="text" id="fname" name="fname" placeholder="First Name">
+          <br />
+        <label for="mname">Middle Name</label>
+          <input type="text" id="mname" name="mname" placeholder="Middle Name">
+          <br />
+        <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="lname" placeholder="Last Name">
+          <br />
+        <label for="suffix">Suffix</label>
+          <input type="text" id="suffix" name="suffix" placeholder="Suffix">
+          <br />
+      </div>
+      <div class="addysearch">
+          <input type="text" id="address" name="address" placeholder="address">
+        <label for="address">Address</label>
+        <br />
+          <input type="text" id="city" name="city" placeholder="city">
+        <label for="city">City</label>
+        <br />
+          <input type="text" id="state" name="state" placeholder="state">
+        <label for="state">State</label>
+        <br />
+          <input type="text" id="zipcode" name="zipcode" placeholder="zipcode">
+        <label for="zipcode">zipcode</label>
+        <br />
+      </div>
+    </div>
+    <div class="miscnewperson">
+      <input type="hidden" name="main" value="true">
+      <label for="onlyannualreceipt">Only Annual Receipts</label>
+      <select name="onlyannualreceipt" id="onlyannualreceipt">
+        <option value="true">True</option>
+        <option value="false" selected>False</option>
+      </select>
+    </div>
     <br />
-    <label for="address">Address</label>
-      <input type="text" id="address" name="address" placeholder="address"><br />
-    <label for="city">City</label>
-      <input type="text" id="city" name="city" placeholder="city"><br />
-    <label for="state">State</label>
-      <input type="text" id="state" name="state" placeholder="state"><br />
-    <label for="zipcode">zipcode</label>
-      <input type="text" id="zipcode" name="zipcode" placeholder="zipcode"><br />
-    <br />
-    <input type="hidden" name="main" value="true">
-    <label for="onlyannualreceipt">Only Annual Receipts</label>
-    <select name="onlyannualreceipt" id="onlyannualreceipt">
-      <option value="true">True</option>
-      <option value="false" selected>False</option>
-    </select>
-    <label for="isActive">Active?</label>
-    <select id="isActive" name="active">
-      <option value="true" selected>True</option>
-      <option value="false">False</option>
-    </select>
+    <div class="miscnewperson">
+      <label for="isActive">Active?</label>
+      <select id="isActive" name="active">
+        <option value="true" selected>True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
 
 
       <br />
     <hr />
-    <input type="submit" value="Save">
-  </form>
-  <form action="/search" method="get">
-    <input type="submit" value="Cancel">
-  </form>
+  <div class="button">
+      <input type="submit" value="Save">
+    </form>
+    <form action="/search" method="get">
+      <input type="submit" value="Cancel">
+    </form>
+  </div>
 </div>
 
 <% include ./partials/foot %>

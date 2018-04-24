@@ -322,7 +322,27 @@ module.exports = {
   },
 
   makePerson(req, res, next) {
+    res.locals.data = req.body
+    console.log(res.locals.data)
+    model.createPerson(req.body)
+      .then( (data) => {
+        res.locals.tempdata = data
+        next()
+      })
+      .catch( (err) => {
+        next(err);
+      })
+  },
 
+  makeAddress(req, res, next) {
+    model.createAddress(res.locals.tempdata, res.locals.data)
+      .then( (data) => {
+        res.locals.tempdata.personid = res.locals.tempdata.id
+        next()
+      })
+      .catch( (err) => {
+        next(err)
+      })
   },
 
   //////////////////////////////////
@@ -355,6 +375,96 @@ module.exports = {
   },
 
   ///////////////////////////////////
+  // REPORTING //////////////////////
+  ///////////////////////////////////
+
+  pullTotalGiving(req, res, next) {
+    model.totalGiving(parseInt(req.params.id))
+      .then( (data) => {
+        if(data.length === 0 || data[0].sum === null){
+          data[0] = { sum: 0 };
+        }
+        res.locals.stats = {}
+        res.locals.stats.totalgiving = data[0].sum.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })
+        next()
+      })
+      .catch( (err) => {
+        next(err)
+      })
+  },
+
+  pullGivingThisYear(req, res, next) {
+    model.totalThisYear(parseInt(req.params.id))
+      .then( (data) => {
+        if(data.length === 0 || data[0].sum === null){
+          data[0] = { sum: 0 };
+        }
+        res.locals.stats.ytdgiving = data[0].sum.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })
+        next()
+      })
+      .catch( (err) => {
+        next(err)
+      })
+  },
+
+  pullAverageGiving(req, res, next) {
+    model.averageGiving(parseInt(req.params.id))
+      .then( (data) => {
+        if(data.length === 0 || data[0].avg === null){
+          data[0] = { avg: 0 };
+        }
+        res.locals.stats.avggiving = data[0].avg.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })
+        next()
+      })
+      .catch( (err) => {
+        next(err)
+      })
+  },
+
+  pullMaxGiving(req, res, next) {
+    model.maxGiving(parseInt(req.params.id))
+      .then( (data) => {
+        if(data.length === 0 || data[0].max === null){
+          data[0] = { max: 0 };
+        }
+        res.locals.stats.maxgiving = data[0].max.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })
+        next()
+      })
+      .catch( (err) => {
+        next(err)
+      })
+  },
+
+  pullMinGiving(req, res, next) {
+    model.minGiving(parseInt(req.params.id))
+      .then( (data) => {
+        if(data.length === 0 || data[0].min === null){
+          data[0] = { min: 0 };
+        }
+        res.locals.stats.mingiving = data[0].min.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })
+        next()
+      })
+      .catch( (err) => {
+        next(err)
+      })
+  },
+
+  ///////////////////////////////////
   // API CALL ///////////////////////
   ///////////////////////////////////
 
@@ -375,13 +485,35 @@ module.exports = {
         });
         response.on('end', function() {
           parseString(completeResponse, (err, result) => {
-            res.json(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0])
+            if(result['SearchResults:searchresults'].message[0].code[0] === '0') {
+              res.locals.api = parseInt(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0].amount[0]['_']);
+              res.locals.api = res.locals.api.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })
+              res.locals.valuation = {};
+              res.locals.valuation.low = parseInt(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0].valuationRange[0].low[0]['_']);
+              res.locals.valuation.low = res.locals.valuation.low.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })
+              res.locals.valuation.high = parseInt(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0].valuationRange[0].high[0]['_']);
+              res.locals.valuation.high = res.locals.valuation.high.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })
+            } else {
+              res.locals.api = 'no data available';
+              res.locals.valuation = {};
+              res.locals.valuation.low = 'no data available';
+              res.locals.valuation.high = 'no data available';
+            }
           })
+          next()
         })
     }).on('error', function (e) {
         console.log('problem with request: ' + e.message);
     });
-
   },
 
 }

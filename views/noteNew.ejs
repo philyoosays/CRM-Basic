@@ -1,30 +1,39 @@
 <% include ./partials/personInfo %>
 
   <form action="/notes/<%= contact.id %>/new" method="post">
-    <label for="date">Date (leave black for now)</label>
-    <input type="date" id="date" name="notedate">
-    <br />
-    <label for="fundraiser">Fundraiser</label>
-    <select name="fundraiserid" id="fundraiser" required>
-      <% fundraiser.forEach( (d) => { %>
-        <option value="<%= d.id %>"><%= d.fname %> <%= d.lname %></option>
-      <% }) %>
-    </select>
-    <label for="category">Category</label>
-    <input type="text" id="category" name="category" list="cats">
-      <datalist id="cats">
-        <% category.forEach( (d) => { %>
-            <option value="<%= d.category %>"><%= d.category %></option>
-        <% }) %>
-      </datalist>
-    <br/>
-    <label for="followup">Follow Up</label>
-    <select name="followup" id="followup">
-      <option value="false" selected>Up To Date</option>
-      <option value="true">Need Follow Up</option>
-    </select>
-    <br/>
-    <label for="note">Note</label><br/>
-    <textarea name="note" rows="10" cols="85" id="note" required></textarea>
+    <div class="searchcontainer">
+      <div class="namesearch">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="notedate">
+        <br />
+        <label for="category">Category</label>
+        <input type="text" id="category" name="category" list="cats">
+          <datalist id="cats">
+            <% category.forEach( (d) => { %>
+                <option value="<%= d.category %>"><%= d.category %></option>
+            <% }) %>
+          </datalist>
+      </div>
+      <div class="addysearch">
+        <select name="fundraiserid" id="fundraiser" required>
+          <% fundraiser.forEach( (d) => { %>
+            <option value="<%= d.id %>"><%= d.fname %> <%= d.lname %></option>
+          <% }) %>
+        </select>
+        <label for="fundraiser">Fundraiser</label>
+        <br />
+        <select name="followup" id="followup">
+          <option value="false" selected>Up To Date</option>
+          <option value="true">Need Follow Up</option>
+        </select>
+        <label for="followup">Follow Up</label>
+      </div>
+    </div>
+    <div class="miscnewperson">
+      <label for="note">Note</label>
+    </div>
+    <div class="miscnewperson">
+      <textarea name="note" rows="10" cols="85" id="note" required></textarea>
+    </div>
 
 <% include ./partials/saveCancelButtons %>

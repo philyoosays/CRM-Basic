@@ -23,6 +23,12 @@ app.route('/:id/contacts')
     control.modeNewContact,
     control.onePerson,
     control.personAllContacts,
+    control.pullTotalGiving,
+    control.pullGivingThisYear,
+    control.pullAverageGiving,
+    control.pullMaxGiving,
+    control.pullMinGiving,
+    control.zillowAPI,
     view.personProfile,
     view.show404
     )
@@ -32,6 +38,12 @@ app.route('/:id/notes')
     control.modeNewNote,
     control.onePerson,
     control.personAllNotes,
+    control.pullTotalGiving,
+    control.pullGivingThisYear,
+    control.pullAverageGiving,
+    control.pullMaxGiving,
+    control.pullMinGiving,
+    control.zillowAPI,
     view.personProfile,
     view.show404
     )
@@ -41,6 +53,12 @@ app.route('/:id/gifts')
     control.modeNewGift,
     control.onePerson,
     control.personAllMoney,
+    control.pullTotalGiving,
+    control.pullGivingThisYear,
+    control.pullAverageGiving,
+    control.pullMaxGiving,
+    control.pullMinGiving,
+    control.zillowAPI,
     view.personProfile,
     view.show404
     )
@@ -51,12 +69,21 @@ app.route('/new')
     view.show404
     )
   .post(
-
+    control.makePerson,
+    control.makeAddress,
+    view.handlePersonChange,
+    view.show406
     )
 
 app.route('/:id')
   .get(
     control.onePerson,
+    control.pullTotalGiving,
+    control.pullGivingThisYear,
+    control.pullAverageGiving,
+    control.pullMaxGiving,
+    control.pullMinGiving,
+    control.zillowAPI,
     view.personProfile,
     view.show404
     )

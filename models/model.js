@@ -4,13 +4,12 @@ module.exports = {
   createPerson(data) {
     return db.one(`
       INSERT INTO people (
-        prefix, fname, nickname, mname, lname, suffix,
+        prefix, fname, mname, lname, suffix,
         onlyannualreceipt, active
       )
       VALUES (
         $/prefix/,
         $/fname/,
-        $/nickname/,
         $/mname/,
         $/lname/,
         $/suffix/,
@@ -21,21 +20,20 @@ module.exports = {
       `, data);
   },
 
-  createAddress(data) {
+  createAddress(id, data) {
     return db.none(`
       INSERT INTO address (
-        personid, address, city, state, zipcode,
-        plus4, main, activestart, activeend, donotmail
+        personid, address, city, state, zipcode, main
       )
       VALUES (
-        $/id/,
-        $/address/,
-        $/city/,
-        $/state/,
-        $/zipcode/,
-        $/main/
+        $/id.id/,
+        $/data.address/,
+        $/data.city/,
+        $/data.state/,
+        $/data.zipcode/,
+        $/data.main/
       )
-      `, data);
+      `, {id, data});
   },
 
   createContact(data) {
@@ -372,6 +370,47 @@ module.exports = {
         id = $/fundraiserid/
       RETURNING *
       `, data);
+  },
+
+  totalGiving(id) {
+    return db.any(`
+      SELECT SUM(amount) AS sum
+      FROM gifts
+      WHERE personid = $1
+      `, id);
+  },
+
+  totalThisYear(id) {
+    return db.any(`
+      SELECT SUM(amount) AS sum
+      FROM gifts
+      WHERE personid = $1
+      AND date_part('year', closedate) = date_part('year', CURRENT_DATE)
+      `, id);
+  },
+
+  averageGiving(id) {
+    return db.any(`
+      SELECT AVG(amount) AS avg
+      FROM gifts
+      WHERE personid = $1
+      `, id)
+  },
+
+  maxGiving(id) {
+    return db.any(`
+      SELECT MAX(amount) AS max
+      FROM gifts
+      WHERE personid = $1
+      `, id)
+  },
+
+  minGiving(id) {
+    return db.any(`
+      SELECT MIN(amount) AS min
+      FROM gifts
+      WHERE personid = $1
+      `, id)
   }
 
 };

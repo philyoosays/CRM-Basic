@@ -1,38 +1,41 @@
 <% include ./partials/personInfo %>
-
+  <div class="personeditbutton">
   <form action="/people/<%= contact.id %>/<%= contact.addressid %>/edit" method="get">
     <input type="submit" value="Edit Person">
   </form>
+  </div>
 
-  <div class="stats">
-    <h1>This is reserved for statistical data</h1>
+  <h1>STATISTICAL DATA</h1>
+  <div class="statscontainer">
+    <div class="statsone">
+      <p><span class="statlabel">Lifetime Giving:</span> <%= stats.totalgiving %></p>
+      <p><span class="statlabel">YTD Giving:</span> <%= stats.ytdgiving %></p>
+      <p><span class="statlabel">Average Giving:</span> <%= stats.avggiving %></p>
+      <p><span class="statlabel">Max/Min Giving</span> <%= stats.maxgiving %> / <%= stats.mingiving %></p>
+    </div>
+    <div class="statstwo">
+      <p><span class="statlabel">Zillow Zestimate Current Home Value:</span> <%= api %></p>
+      <p><span class="statlabel">Low-side Estimate Home Value:</span> <%= valuation.low %></p>
+      <p><span class="statlabel">High-side Estimate Home Value:</span> <%= valuation.high %></p>
+    </div>
   </div>
   <div class="personbuttondiv">
-    <ul class="personbuttonul">
-      <li class="personbutton">
-          <form action="/search" method="get">
-            <input type="submit">
-          </form>
-          Search Contacts</li>
-      <li class="personbutton">
-          <form action="/people/<%= contact.id %>/gifts" method="get">
-            <input type="submit">
-          </form>
-          Show All Gifts</li>
-      <li class="personbutton">
-          <form action="/people/<%= contact.id %>/notes" method="get">
-            <input type="submit">
-          </form>
-          Show All Notes</li>
-      <li class="personbutton">
-          <form action="/people/<%= contact.id %>/contacts" method="get">
-            <input type="submit">
-          </form>
-          More Contact Info</li>
-    </ul>
+    <form action="/search" method="get">
+      <input type="submit" value="Return To Search">
+    </form>
+    <form action="/people/<%= contact.id %>/gifts" method="get">
+      <input type="submit" value="Show All Gifts">
+    </form>
+    <form action="/people/<%= contact.id %>/notes" method="get">
+      <input type="submit" value="Show All Notes">
+    </form>
+    <form action="/people/<%= contact.id %>/contacts" method="get">
+      <input type="submit" value="More Contact Info">
+    </form>
   </div>
-  <div>
-    <hr />
+  <hr />
+  <div class="newbuttons">
+
       <% if(mode === 'gifts') { %>
         <form action="/gifts/<%= contact.id %>/new" method="get">
           <input type="submit" value="New Gift">
@@ -46,8 +49,8 @@
           <input type="submit" value="New Note">
         </form>
       <% } %>
-    <hr />
   </div>
+  <hr />
   <div class="results">
     <% if(data.length === 0) { %>
       <hr />
@@ -56,41 +59,45 @@
     <% } else { %>
       <% data.forEach (d => { %>
         <% if(Object.keys(d).indexOf('isrecurring') !== -1) { %>
-          <p>Amount: $<%= d.amount %></p>
-          <p>Date: <%= d.closedate.toString().slice(0,-23) %></p>
-          <p>Campaign: <%= d.campaign %></p>
-          <p>Fundraiser: <%= d.firstname %> <%= d.lastname %></p>
+          <p><strong>Amount: </strong>$<%= d.amount %></p>
+          <p><strong>Date: </strong><%= d.closedate.toString().slice(0,-23) %></p>
+          <p><strong>Campaign: </strong><%= d.campaign %></p>
+          <p><strong>Fundraiser: </strong><%= d.firstname %> <%= d.lastname %></p>
           <hr />
         <% } %>
         <% if(Object.keys(d).indexOf('type') !== -1) { %>
-          <%= d.type %>: <%= d.contact %> <% if(d.preferred === true) { %><span> - Preferred</span><% } %></p>
+          <p><strong><%= d.type %>: </strong><%= d.contact %> <% if(d.preferred === true) { %><span> - Preferred</span><% } %></p>
           <% if(d.donotcontact === true) { %>
             <p>Do Not Contact</p>
           <% } %>
-          <form action="/contacts/<%= d.id %>/edit" method="get">
-            <input type="submit" value="Edit Contact">
-          </form>
-          <form action="/contacts/<%= d.id %>?_method=delete" method="post">
-            <input type="submit" value="Delete Contact">
-          </form>
+          <div class="button">
+            <form action="/contacts/<%= d.id %>/edit" method="get">
+              <input type="submit" value="Edit Contact">
+            </form>
+            <form action="/contacts/<%= d.id %>?_method=delete" method="post">
+              <input type="submit" value="Delete Contact">
+            </form>
+          </div>
           <hr />
         <% } %>
         <% if(Object.keys(d).indexOf('note') !== -1) { %>
-          <p>Note Date: <%= d.notedate.toString().slice(0,-14) %> | Made By: <%= d.firstname %> <%= d.lastname %></p>
-          <p>Category: <%= d.category %> | Follow Up:
+          <p><strong>Note Date: </strong><%= d.notedate.toString().slice(0,-14) %> <strong>| Made By: </strong><%= d.firstname %> <%= d.lastname %></p>
+          <p><strong>Category: </strong><%= d.category %><strong> | Follow Up:</strong>
             <% if(d.followup === true) { %>
               <span>Need Follow Up</span>
             <% } else { %>
               <span>Up To Date</span>
             <% } %></p>
-          <p>Note:</p>
+          <p><strong>Note:</strong></p>
           <p><%= d.note %></p>
-          <form action="/notes/<%= d.id %>/edit" method="get">
-            <input type="submit" value="Edit Note">
-          </form>
-          <form action="/notes/<%= d.id %>?_method=delete" method="post">
-            <input type="submit" value="Delete Note">
-          </form>
+          <div class="button">
+            <form action="/notes/<%= d.id %>/edit" method="get">
+              <input type="submit" value="Edit Note">
+            </form>
+            <form action="/notes/<%= d.id %>?_method=delete" method="post">
+              <input type="submit" value="Delete Note">
+            </form>
+          </div>
           <hr />
         <% } %>
       <% }) %>
@@ -102,7 +109,7 @@
   const button2 = document.querySelector('li:nth-of-type(2)');
   const button3 = document.querySelector('li:nth-of-type(3)');
   button1.addEventListener('click', () => {
-    location
+    location.href=
   })
 </script>
 <% include ./partials/foot %>

@@ -1,48 +1,59 @@
 <% include ./partials/personInfo %>
 
   <form action="/gifts/<%= contact.id %>/new" method="post">
-    <label for="amount">Amount</label>
-      <input type="text" id="amount" name="amount" placeholder="$0.00">
-    <label for="closedate">Close Date</label>
-      <input type="date" id="closedate" name="closedate" required>
-    <br />
-    <label for="fundraiser">Fundraiser</label>
-      <select name="fundraiserid" id="fundraiser" required>
-        <% fundraiser.forEach(d => { %>
-          <option value="<%= d.id %>"><%= d.fname %> <%= d.lname %></option>
-        <% }) %>
-      </select>
-      <br/>
-    <label for="campaign">Campaign</label>
-      <select name="campaignid" id="campaign">
-        <% campaigns.forEach(d => { %>
-          <option value="<%= d.id %>"><%= d.campaignname %></option>
-        <% }) %>
-      </select>
-      <br />
-    <label for="donotthank">Do Not Thank</label>
-      <select name="donotthank" id="donotthank">
-        <option value="true">True</option>
-        <option value="false" selected>False</option>
-      </select>
-    <label for="isrecurring">Is recurring?</label>
-      <select name="isrecurring" id="isrecurring">
-        <option value="true">True</option>
-        <option value="false" selected>False</option>
-      </select>
-    <label for="datasource">Data Source</label>
-      <input type="text" id="datasource" name="datasource">
-    <label for="acknowledged">Acknowledged</label>
-      <input type="date" name="acknowledged" id="acknowledged">
-    <label for="sourceid">Source ID</label>
-      <input type="text" name="sourceid" id="sourceid">
-    <label for="paymenttype">Payment Type</label>
-      <input type="text" id="paymenttype" name="paymenttype" list="types">
-        <datalist id="types">
-          <% paymenttypes.forEach( (d) => { %>
-            <option value="<%= d.paymenttype %>"><%= d.paymenttype %></option>
-          <% }) %>
-        </datalist>
+    <div class="searchcontainer">
+      <div class="namesearch">
+        <label for="amount">Amount</label>
+          <input type="text" id="amount" name="amount" placeholder="$0.00">
+          <br />
+        <label for="fundraiser">Fundraiser</label>
+          <select name="fundraiserid" id="fundraiser" required>
+            <% fundraiser.forEach(d => { %>
+              <option value="<%= d.id %>"><%= d.fname %> <%= d.lname %></option>
+            <% }) %>
+          </select>
+          <br/>
+        <label for="campaign">Campaign</label>
+          <select name="campaignid" id="campaign">
+            <% campaigns.forEach(d => { %>
+              <option value="<%= d.id %>"><%= d.campaignname %></option>
+            <% }) %>
+          </select>
+        <br />
+        <label for="donotthank">Do Not Thank</label>
+          <select name="donotthank" id="donotthank">
+            <option value="true">True</option>
+            <option value="false" selected>False</option>
+          </select>
+        <br />
+        <label for="isrecurring">Is recurring?</label>
+          <select name="isrecurring" id="isrecurring">
+            <option value="true">True</option>
+            <option value="false" selected>False</option>
+          </select>
+      </div>
+      <div class="addysearch">
+          <input type="date" id="closedate" name="closedate" required>
+        <label for="closedate">Close Date</label>
+        <br />
+          <input type="text" id="paymenttype" name="paymenttype" list="types">
+            <datalist id="types">
+              <% paymenttypes.forEach( (d) => { %>
+                <option value="<%= d.paymenttype %>"><%= d.paymenttype %></option>
+              <% }) %>
+            </datalist>
+        <label for="paymenttype">Payment Type</label>
+        <br />
+          <input type="text" id="datasource" name="datasource">
+        <label for="datasource">Data Source</label>
+        <br />
+          <input type="date" name="acknowledged" id="acknowledged">
+        <label for="acknowledged">Acknowledged</label>
+        <br />
+          <input type="text" name="sourceid" id="sourceid">
+        <label for="sourceid">Source ID</label>
+      </div>
+    </div>
 
 <% include ./partials/saveCancelButtons %>
 

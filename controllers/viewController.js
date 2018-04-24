@@ -81,6 +81,9 @@ module.exports = {
         money: res.locals.money,
         data: res.locals.data,
         mode: res.locals.mode,
+        api: res.locals.api,
+        valuation: res.locals.valuation,
+        stats: res.locals.stats,
       })
   },
   handleNoteChange(req, res, next) {
