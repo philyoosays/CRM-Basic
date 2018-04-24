@@ -3,13 +3,13 @@
 
 -- -- \c crm_unit02
 
--- DROP TABLE IF EXISTS people CASCADE;
--- DROP TABLE IF EXISTS address CASCADE;
--- DROP TABLE IF EXISTS contact CASCADE;
--- DROP TABLE IF EXISTS notes CASCADE;
--- DROP TABLE IF EXISTS gifts CASCADE;
--- DROP TABLE IF EXISTS campaigns CASCADE;
--- DROP TABLE IF EXISTS fundraisers CASCADE;
+DROP TABLE IF EXISTS people CASCADE;
+DROP TABLE IF EXISTS address CASCADE;
+DROP TABLE IF EXISTS contact CASCADE;
+DROP TABLE IF EXISTS notes CASCADE;
+DROP TABLE IF EXISTS gifts CASCADE;
+DROP TABLE IF EXISTS campaigns CASCADE;
+DROP TABLE IF EXISTS fundraisers CASCADE;
 
 CREATE TABLE people (
 id SERIAL PRIMARY KEY,
@@ -137,7 +137,7 @@ INSERT INTO campaigns
 VALUES
 ('AprilEmail', 'email', 'PhilsAstonMartin Fund'),
 ('AprilMailer', 'mailing', 'PhilsAstonMartin Fund'),
-('MarchEmail', 'email', 'PhilsAstonMartin Fund');
+('MarchEmail', 'email', 'PhilsAstonMartin Fund'),
 ('MarchMailer', 'mailing', 'PhilsAstonMartin Fund');
 
 INSERT INTO gifts
