@@ -14,7 +14,7 @@
       <p><span class="statlabel">Max/Min Giving</span> <%= stats.maxgiving %> / <%= stats.mingiving %></p>
     </div>
     <div class="statstwo">
-      <p><span class="statlabel">Zillow Zestimate Current Home Value:</span> <%= api %></p>
+      <p><span class="statlabel">Zillow Zestimate Current Home Value:</span> <%= valuation.zestimate %></p>
       <p><span class="statlabel">Low-side Estimate Home Value:</span> <%= valuation.low %></p>
       <p><span class="statlabel">High-side Estimate Home Value:</span> <%= valuation.high %></p>
     </div>
@@ -54,7 +54,7 @@
   <div class="results">
     <% if(data.length === 0) { %>
       <hr />
-      <h1>Select Data To Be Shown</h1>
+      <h1>No Data</h1>
       <hr />
     <% } else { %>
       <% data.forEach (d => { %>

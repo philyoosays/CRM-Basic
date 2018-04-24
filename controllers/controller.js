@@ -374,7 +374,17 @@ module.exports = {
   },
 
   modeNew(req, res, next) {
-    res.locals.mode = 'new'
+    res.locals.mode = 'new';
+    next()
+  },
+
+  modePerson(req, res, next) {
+    res.locals.mode = 'person';
+    next()
+  },
+
+  modeSearch(req, res, next) {
+    res.locals.mode = 'search';
     next()
   },
 
@@ -489,13 +499,13 @@ module.exports = {
         });
         response.on('end', function() {
           parseString(completeResponse, (err, result) => {
+            res.locals.valuation = {};
             if(result['SearchResults:searchresults'].message[0].code[0] === '0') {
-              res.locals.api = parseInt(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0].amount[0]['_']);
-              res.locals.api = res.locals.api.toLocaleString('en-US', {
+              res.locals.valuation.zestimate = parseInt(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0].amount[0]['_']);
+              res.locals.valuation.zestimate = res.locals.valuation.zestimate.toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'USD'
               })
-              res.locals.valuation = {};
               res.locals.valuation.low = parseInt(result['SearchResults:searchresults'].response[0].results[0].result[0].zestimate[0].valuationRange[0].low[0]['_']);
               res.locals.valuation.low = res.locals.valuation.low.toLocaleString('en-US', {
                 style: 'currency',

@@ -77,6 +77,7 @@ app.route('/new')
 
 app.route('/:id')
   .get(
+    control.modePerson,
     control.onePerson,
     control.pullTotalGiving,
     control.pullGivingThisYear,

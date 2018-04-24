@@ -21,6 +21,8 @@ This schedule will be used to keep track of your progress throughout the week an
 
 The project is a Contact Resource Management System (CRM). This kind of system can be used by a sales team, non-profits, or campaigns. It will keep track of leads/donors/constituents and their contact information, donations/sales, campaign attribution data, and any notes that the fundraising/sales team make.
 
+Tip: Search for people with an m in the middle initial when testing because they have money data.
+
 Post MVP, I am considering adding a fundraiser's profile with their sales data, an API call to Zillow.com's API to be able to show the user the home value of a particular donor so that the fundraiser can have a better idea of what dollar range to make their ask. Lastly, if I ahve the time, I want to represent data in the campaign overview page and the fundraiser's profile page with pretty D3 graphs.
 
 ## Wireframes
@@ -63,7 +65,7 @@ https://drive.google.com/file/d/1lqn45ruWOkCPUJMvzanOlpJuz3Acq8Sq/view?usp=shari
 ## App Components
 
 ### Landing Page - People Search View (PostMVP - Fundraiser Overview)
-The MVP for my app will send authenticated users to the People Search page but post MVP will send people to the fundraiser overview page.
+The MVP landing page for my app will be the People Search page but post MVP will send people to the fundraiser overview page.
 
 The People Search View will contain input fields pertaining to the people like their name but also fields to input address information to pull up a list under the search fields for all matching people. Ideally the fields would be able to contain just partial data and not all the fields have to be filled in. The result list will be links to the person's individual view.
 

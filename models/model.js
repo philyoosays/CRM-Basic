@@ -220,6 +220,7 @@ module.exports = {
         AND (a.city ILIKE $/city/)
         AND (a.state ILIKE $/state/)
         AND (a.zipcode = $/zipcode/)
+      ORDER BY lname
       `, data);
   },
 
@@ -252,6 +253,7 @@ module.exports = {
         AND (a.address ILIKE $/address/)
         AND (a.city ILIKE $/city/)
         AND (a.state ILIKE $/state/)
+      ORDER BY lname
       `, data);
   },
 
