@@ -221,24 +221,14 @@ module.exports = {
   },
 
   addNewGift(req, res, next) {
-    res.locals.redirect = req.params.id;
-    req.body.personid = parseInt(req.params.id);
-    model.createGift(req.body)
-      .then( (data) => {
-        next()
-      })
-      .catch( (err) => {
-        next(err)
-      })
-  },
-
-  addNewGift(req, res, next) {
     req.body.personid = parseInt(req.params.id);
     req.body.fundraiserid = parseInt(req.body.fundraiserid);
     req.body.campaignid = parseInt(req.body.campaignid);
     req.body.amount = parseFloat(req.body.amount);
     res.locals.redirect = req.body.personid;
-    console.log('addNewGift: ', req.body)
+    if(req.body.acknowledged === '') {
+      req.body.acknowledged = null;
+    }
     model.createGift(req.body)
       .then( (data) => {
         next()
@@ -478,8 +468,8 @@ module.exports = {
 
     const url = 'http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=' + app.get('apiKey') + '&address=' + address + '&citystatezip=' + city;
 
-    var apiCall = http.get(url, function (response) {
-        var completeResponse = '';
+    let apiCall = http.get(url, function (response) {
+        let completeResponse = '';
         response.on('data', function (chunk) {
           completeResponse += chunk;
         });
@@ -511,8 +501,8 @@ module.exports = {
           })
           next()
         })
-    }).on('error', function (e) {
-        console.log('problem with request: ' + e.message);
+    }).on('error', function (err) {
+        next(err);
     });
   },
 

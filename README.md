@@ -62,9 +62,6 @@ https://drive.google.com/file/d/1lqn45ruWOkCPUJMvzanOlpJuz3Acq8Sq/view?usp=shari
 
 ## App Components
 
-### Login Page/Authentication
-Straight-up, this is where a sales-person would login.
-
 ### Landing Page - People Search View (PostMVP - Fundraiser Overview)
 The MVP for my app will send authenticated users to the People Search page but post MVP will send people to the fundraiser overview page.
 
@@ -74,7 +71,7 @@ The People Search View will contain input fields pertaining to the people like t
 The Fundraiser Overview would contain the fundraiser's profile and their performance stats as well as the short list of their most recent notes prioritizing the notes that are marked as follow up (which will be a boolean field in the notes table)
 
 ### Person View
-The Person view will contain the person's information like primary contact information. Giving stats will be a POST MVP feature. There will be three buttons. The all contacts, all gifts, and all notes. Each of these will lead to a view that displays the relevent data.
+The Person view will contain the person's information like primary contact information. Giving stats will be a POST MVP feature. There will be three buttons. The all contacts, all gifts, and all notes. Each of these will lead to a view that displays the relevant data.
 
 (POST MVP)
 Under the buttons will be a short list of the most recent giving history and notes.
@@ -90,12 +87,6 @@ Delete can happen here.
 
 ### New Gift View + Edit
 A form to add a new gift and the edit version (2 views)
-
-### New Campaign View + Edit
-A form to add a new campaign and the edit version (2 views)
-
-### Campaign View
-Campaign view will show campaign data. POST MVP will also show performance data.
 
 ## MVP 
  - Notes for people and donations
@@ -113,47 +104,42 @@ Campaign view will show campaign data. POST MVP will also show performance data.
 
 ## Functional Components
 
-<!-- Based on the initial logic defined in the previous game phases section try and breakdown the logic further into functional components, and by that we mean functions.  Does your logic indicate that code could be encapsulated for the purpose of reusablility.  Once a function has been defined it can then be incorporated into a class as a method.  -->
-
  - Database
  - Node server
  - EJS views
- - user authentication
-
-<!-- Time frames are also key in the development cycle.  You have limited time to code all phases of the game.  Your estimates can then be used to evalute game possibilities based on time needed and the actual time you have before game must be submitted.  -->
+ - API Call
 
 | Component | Priority | Estimated Time | Actual Time |
 | --- | :---: |  :---: | :---: |
-| Build Schema | H | .5hr |  |
-| Login | H | .5hr |  |
-| Basic server and folder structure | H | 1hr |  |
-| People Search | H | 1hr |  |
-| Views: person 1hr, new note 1.5hr, new gift 1.5hr, campaign 1hr, new campaign 1hr, new person 1hr| H | 7hr |  |
-| Models | H | 2hr |  |
-| Controllers | H | 3hr |  |
-| Routes | H | 3hr |  |
-| HMake appropriate fake data | H | 2hr |  |
-| all edit views | H | 2hr |  |
-| Total |  | 27hrs |  |
+| Build Schema | H | .5hr | .5hr |
+| API Call | H | 2hr | 1.5hr |
+| Basic server and folder structure | H | 1hr | 1hr |
+| People Search | H | 1hr | 4hrs |
+| Views: person 1hr, new note 1.5hr, new gift 1.5hr, campaign 1hr, new campaign 1hr, new person 1hr| H | 7hr | 11hr |
+| Models | H | 2hr | 3hr |
+| Controllers | H | 3hr | 3hr |
+| Routes | H | 3hr | 2hr |
+| Make appropriate fake data | H | 2hr | .5hr |
+| all edit views | H | 2hr | 2hr |
+| styling | M | 2hr | 2hr|
+| Total |  | 25.5hrs | 30.5hr |
 
 ## Helper Functions
 
-
-## Additional Libraries
-
+I built a few data reformatting (to fit the schema) operations inside the controllers. I found that especially with date fields, data doesn't come back from the forms in the format I need. I used if statements to decide if a date with value empty string is an emptystring and needs to be converted to null before attempting to insert into the database.
 
 ## Code Snippet
+if(result['SearchResults:searchresults'].message[0].code[0] === '0')
 
-
-## jQuery Discoveries
-
-
-## Change Log
- - created schema
- - built out the folder structure
- - server.js written and running
- - built the models
- - started the view, controller, and routes for main search
+To deal with addresses that have no evaluation data on Zillow or typos and such, I used this if statement to say, if there is data, go thorugh the normal procedure. If there was any kind of issue, return strings that say 'no data available' so that instead of erroring, the CRM continues to work.
 
 ## Issues and Resolutions
+
+My biggest issue by far on this project was getting my "fuzzy search" to work properly. I wanted the user to be able to type into any number of the fields, input partials or complete information, and the search will still work and find all the relevant people. Some discoveries that I made in the process of resolving this issue was that when a string is sent to the model, putting wildcards (%) on either end of the string doesn't work because the string has quotes so it's akin to saying %'searchForThis'%. And since none of the data actually contains quotes, this would break the search. I resolved the issue by concatenating the wildcards directly into the string so that it would look like this '%searchForThis%'.
+
+Next, I had to build in a conditional to send form data to one of two models. I had to do that because zipcodes should not be partially matched. So the conditionally looked at the value of the zipcode and if it sees no value, it gets sent to a model with no zipcode match in the WHERE clause and vice versa.
+
+The next hurdle was honestly that I had been staring at this one part of my app for too long and failed to realize until MUCH later that the WHERE clause I had wrote did not return what I was actually looking for. This would have been an easy fix except I had to figure out what to do about empty fields (null) in the database. After exploring many different strategies including dynamic fields, I decided that the simplest solution was to simply not allow null values in any of the fields that are being searched. Instead, I changed the schema to make the relevant fields default to empty string if no value is given. This way, if I don't fill in a field in the search form, this gets sent to the model from the form '%%'. The double wildcards had no problem dealing with empty strings.
+
+All in all, looking back on the fuzzy search, it's actually not as difficult to do as I had experienced. One could look at the code and say that it takes a lot of fields to match but it's pretty straight-forward. It was difficult in practice because of the number of things that went wrong at once. If I fixed one thing, it was impossible to know if I did anything because the other problems would keep the "bug fires" burning seemingly as hot as it was before.
 

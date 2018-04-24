@@ -45,9 +45,9 @@ CREATE TABLE fundraisers (
 id SERIAL PRIMARY KEY,
 fname TEXT,
 lname TEXT,
-goal FLOAT(2),
-username VARCHAR(255) UNIQUE NOT NULL,
-password_digest TEXT NOT NULL
+goal FLOAT(2)
+-- username VARCHAR(255) UNIQUE NOT NULL,
+-- password_digest TEXT NOT NULL
 );
 
 -- CREATE TABLE peopleaddress (
@@ -108,7 +108,7 @@ followup BOOLEAN DEFAULT false
 INSERT INTO people
 (prefix, fname, mname, lname, suffix, active)
 VALUES
-('', 'Phil', 'Yoo', true),
+('', 'Phil','', 'Yoo', '', true),
 ('','Evelyn','','Gustafson','',TRUE),
 ('','Richard','','Blomer','',TRUE),
 ('','Domenick','','DAdamo','',TRUE),
@@ -174,16 +174,19 @@ VALUES
 (30,'36144 Adobe Dr','Fremont','CA','94536',TRUE);
 
 INSERT INTO fundraisers
-(fname, lname, username, password_digest)
+(fname, lname)
 VALUES
-('phil', 'yoo', 'pyoo'),
-('johnny', 'cash', 'jcash'),
-('jimmy', 'valentine', 'jvalentine');
+('phil', 'yoo'),
+('johnny', 'cash'),
+('jimmy', 'valentine');
 
 INSERT INTO campaigns
 (campaignname, type, budgetcategory)
 VALUES
-('iget$$$', 'email', 'PhilsAstonMartin Fund');
+('AprilEmail', 'email', 'PhilsAstonMartin Fund'),
+('AprilMailer', 'mailing', 'PhilsAstonMartin Fund'),
+('MarchEmail', 'email', 'PhilsAstonMartin Fund');
+('MarchMailer', 'mailing', 'PhilsAstonMartin Fund');
 
 INSERT INTO gifts
 (personid, amount, closedate, fundraiserid, campaignid, paymenttype)
