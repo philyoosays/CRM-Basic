@@ -16,43 +16,57 @@ module.exports = {
 
   findPeople(req, res, next) {
     res.locals.input = req.query;
-    let temp = res.locals.input;
-    for(key in temp) {
-      temp[key] = '%' + temp[key] + '%';
+    let theData = res.locals.input;
+
+    // Stopping blank searches
+    let concatString = '';
+    for(keys in theData) {
+      concatString += theData[keys];
     }
-    if(temp.zipcode !== '%%') {
-      temp.zipcode = temp.zipcode.slice(1,-1);
-      model.findPeople(req.query)
-        .then( (data) => {
-          res.locals.result = data;
-          for(key in temp) {
-            if(key !== 'zipcode'){
-              temp[key] = temp[key].slice(1,-1);
-            } else if(temp.zipcode === '%%') {
-              temp.zipcode = '';
-            }
-          }
-          next();
-        })
-        .catch( err => {
-          next(err);
-        });
+    if(concatString === '') {
+      res.locals.result = [];
+      next();
     } else {
-      model.findPeopleNoZip(req.query)
-        .then( (data) => {
-          res.locals.result = data;
-          for(key in temp) {
-            if(key !== 'zipcode'){
-              temp[key] = temp[key].slice(1,-1);
-            } else if(temp.zipcode === '%%') {
-              temp.zipcode = '';
+      // Adding wildcards
+      for(key in theData) {
+        theData[key] = '%' + theData[key] + '%';
+      }
+      // zipcode HAS a value
+      if(theData.zipcode !== '%%') {
+        theData.zipcode = theData.zipcode.slice(1,-1);
+        model.findPeople(req.query)
+          .then( (data) => {
+            res.locals.result = data;
+            for(key in theData) {
+              if(key !== 'zipcode'){
+                theData[key] = theData[key].slice(1,-1);
+              } else if(theData.zipcode === '%%') {
+                theData.zipcode = '';
+              }
             }
-          }
-          next();
-        })
-        .catch( err => {
-          next(err);
-        });
+            next();
+          })
+          .catch( err => {
+            next(err);
+          });
+      } else {
+        // zipcode did NOT HAVE a value
+        model.findPeopleNoZip(req.query)
+          .then( (data) => {
+            res.locals.result = data;
+            for(key in theData) {
+              if(key !== 'zipcode'){
+                theData[key] = theData[key].slice(1,-1);
+              } else if(theData.zipcode === '%%') {
+                theData.zipcode = '';
+              }
+            }
+            next();
+          })
+          .catch( err => {
+            next(err);
+          });
+      }
     }
   },
 

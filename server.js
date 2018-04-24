@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
-  res.redirect('/auth/login')
+  res.redirect('/search')
 });
 
 app.use('/search', searchRoutes);
