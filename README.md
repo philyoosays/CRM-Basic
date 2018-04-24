@@ -143,3 +143,5 @@ The next hurdle was honestly that I had been staring at this one part of my app 
 
 All in all, looking back on the fuzzy search, it's actually not as difficult to do as I had experienced. One could look at the code and say that it takes a lot of fields to match but it's pretty straight-forward. It was difficult in practice because of the number of things that went wrong at once. If I fixed one thing, it was impossible to know if I did anything because the other problems would keep the "bug fires" burning seemingly as hot as it was before.
 
+Another issue was the API call. The API I wanted is an XML api and it was a royal pain to work it. After a seemingly endless number of Google searches later, I managed to get the xml data, parse it to JSON and use it on the app.
+
